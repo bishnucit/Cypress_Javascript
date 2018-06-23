@@ -1,3 +1,6 @@
+##Author's Note - Below code searches all links from website given in url variable and prints out the status code and the full url after parsing.
+
+
 import requests
 import re
 import urllib3
