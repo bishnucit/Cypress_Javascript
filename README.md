@@ -1,6 +1,12 @@
 # CYPRESS - JAVASCRIPT - AUTOMATION
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
-npm install --save-dev cypress
-.\node_modules\.bin\cypress.cmd install --force
-npx cypress open - with exe
-npx cypress run - headless run
+npm install --save-dev cypress (install project leve)
+--------------------------------------------------------------------------------------------------------------
+.\node_modules\.bin\cypress.cmd install --force (sometimes installing doesnot work so we need force reinstall)
+--------------------------------------------------------------------------------------------------------------
+npx cypress open - with exe (opens up the cypress exe test runner)
+--------------------------------------------------------------------------------------------------------------
+npx cypress run --headless  (runs all cypress tests in headless mode)
+--------------------------------------------------------------------------------------------------------------
