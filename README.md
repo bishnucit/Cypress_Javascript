@@ -1,5 +1,6 @@
-# Website_Automation
-Using BS4, urllib3, requests trying to test a website.
+# CYPRESS - JAVASCRIPT - AUTOMATION
 
-
-Requires BS4, requests, urllib3, selenium modules installed
+npm install --save-dev cypress
+.\node_modules\.bin\cypress.cmd install --force
+npx cypress open - with exe
+npx cypress run - headless run
