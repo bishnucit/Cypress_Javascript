@@ -8,5 +8,7 @@ npm install --save-dev cypress (install project level)
 --------------------------------------------------------------------------------------------------------------
 npx cypress open - with exe (opens up the cypress exe test runner)
 --------------------------------------------------------------------------------------------------------------
-npx cypress run --headless  (runs all cypress tests in headless mode)
+npx cypress run   (runs all cypress tests in headless mode)
+--------------------------------------------------------------------------------------------------------------
+npx cypress run --headed   (runs all cypress tests in ui mode)
 --------------------------------------------------------------------------------------------------------------
