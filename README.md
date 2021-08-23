@@ -12,3 +12,9 @@ npx cypress run   (runs all cypress tests in headless mode)
 --------------------------------------------------------------------------------------------------------------
 npx cypress run --headed   (runs all cypress tests in ui mode)
 --------------------------------------------------------------------------------------------------------------
+npx cypress run --spec "location_to_spec" (runs a single spec file)
+--------------------------------------------------------------------------------------------------------------
+npx cypress run --browser chrome (runs on a particular browser instead of default)
+--------------------------------------------------------------------------------------------------------------
+npx cypress run  --record --spec "location_to_spec" (runs a single spec file and records on dashboard)
+--------------------------------------------------------------------------------------------------------------
