@@ -14,7 +14,7 @@
 /// <reference types="cypress" />
 
 
-describe('visit the site', () => {
+describe('TODO apps testing', () => {
 
     it('visit test site',() => {
         cy.visit('https://example.cypress.io/todo')
@@ -33,7 +33,6 @@ describe('visit the site', () => {
         cy.get(':nth-child(1) > .view > label').should('have.text', 'Pay electric bill');
         cy.get(':nth-child(2) > .view > label').should('have.text', 'Walk the dog');
     })
-
 
     it.skip('remove both default items - skip if fails', () =>{
         //need to hover over the li and make the X button visible to perform this
