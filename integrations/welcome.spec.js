@@ -35,12 +35,9 @@ describe('visit the site', () => {
     })
 
 
-    it('remove both default items', () =>{
-        //cy.get(':nth-child(1) > .view > label').trigger('mouseover');
-        //cy.get(':nth-child(1) > .view > button').click({force:true})
-
-
-    } )
-
-
+    it.skip('remove both default items - skip if fails', () =>{
+        //need to hover over the li and make the X button visible to perform this
+        cy.get(':nth-child(1) > .view > label').trigger('mouseover');
+        cy.get(':nth-child(1) > .view > button').click({force:true})
+    })
   })
