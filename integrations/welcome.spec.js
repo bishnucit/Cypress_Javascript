@@ -14,7 +14,7 @@
 /// <reference types="cypress" />
 
 
-describe('TODO apps testing', () => {
+describe('visit the site', () => {
 
     it('visit test site',() => {
         cy.visit('https://example.cypress.io/todo')
@@ -34,9 +34,21 @@ describe('TODO apps testing', () => {
         cy.get(':nth-child(2) > .view > label').should('have.text', 'Walk the dog');
     })
 
-    it.skip('remove both default items - skip if fails', () =>{
-        //need to hover over the li and make the X button visible to perform this
-        cy.get(':nth-child(1) > .view > label').trigger('mouseover');
-        cy.get(':nth-child(1) > .view > button').click({force:true})
+    it('remove first default item', () =>{
+        //cy.contains('Pay electric bill').get('.todo-button').as('closeBtn')
+        //cy.get('@closeBtn').click({ force: true })
+        cy.contains('Pay electric bill')//.find(':nth-child(1) > .view > button').click({ force: true })
+
+    })
+//
+    it('checks all elements in the site', () => {
+        cy.contains('todos').should('exist')
+        cy.contains('Pay electric bill').should('exist')
+        cy.contains('Walk the dog').should('exist')
+        cy.contains('2 items left').should('exist')
+        cy.contains('All').should('exist')
+        cy.contains('Active').should('exist')
+        cy.contains('Completed').should('exist')
+
     })
   })
