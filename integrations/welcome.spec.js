@@ -19,6 +19,7 @@ describe('Test Cases on a test website', () => {
     it('visit test site',() => {
         cy.log('Visiting the test website');
         cy.visit(testURL);
+        cy.get(".todo-list").should("exist");
     });
 
     it('checks all elements in the site', () => {
