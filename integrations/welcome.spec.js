@@ -55,9 +55,7 @@ describe('Test Cases on a test website', () => {
         //cy.get('@closeBtn').click({ force: true })
         cy.contains('Pay electric bill').find('.destroy').invoke('show').click({ force: true })
 
-        cy.on('uncaught:exception', (err, runnable) => {
-            return false
-        })
+
     })
 
     it('adding a new todo item', () => {
@@ -72,23 +70,21 @@ describe('Test Cases on a test website', () => {
         cy.get('.todo-list li').should('have.length', 3).last().should('have.text', newItem)
         cy.get('[for="toggle-all"]').click()
 
-        cy.on('uncaught:exception', (err, runnable) => {
-            return false
-        })
+
     })
 
     it.skip('navigating through 3 tabs', () => {
         cy.log('Navigating through the tabs')
         cy.contains('All').click()
-        cy.url().should('eq', 'https://example.cypress.io/todo#/')
+        //cy.url().should('eq', 'https://example.cypress.io/todo#/')
+        cy.location('pathname').should('include', 'todo#')
         cy.contains('Active').click()
-        cy.url().should('eq', 'https://example.cypress.io/todo#/active')
+        //cy.url().should('eq', 'https://example.cypress.io/todo#/active')
+        cy.location('pathname').should('include', 'active')
         cy.contains('Completed').click()
-        cy.url().should('eq', 'https://example.cypress.io/todo#/completed')
+        //cy.url().should('eq', 'https://example.cypress.io/todo#/completed')
+        cy.location('pathname').should('include', 'completed')
 
-        cy.on('uncaught:exception', (err, runnable) => {
-            return false
-        })
     })
 
     it.skip('completing first todo item and then remove the item from list', () => {
@@ -101,8 +97,6 @@ describe('Test Cases on a test website', () => {
         cy.contains('Clear Completed').click()
         cy.get('@list').should('have.length', 2)
 
-        cy.on('uncaught:exception', (err, runnable) => {
-            return false
-        })
+
     })
   })
