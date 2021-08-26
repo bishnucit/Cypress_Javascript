@@ -49,23 +49,35 @@ describe('Test Cases on a test website', () => {
         cy.get(':nth-child(2) > .view > label').should('have.text', 'Walk the dog');
     })
 
-    it.skip('remove first default item', () =>{
+    it('remove first default item', () =>{
         cy.log('Trying to remove first list item, doesnot work so will be skipped')
         //cy.contains('Pay electric bill').get('.todo-button').as('closeBtn')
         //cy.get('@closeBtn').click({ force: true })
         cy.contains('Pay electric bill').find('.destroy').invoke('show').click({ force: true })
+
+        cy.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
     })
 
     it('adding a new todo item', () => {
         cy.log('Adding a new todo item')
+        const newItem = 'Wash the clothes'
+
         cy.contains('Wash the clothes').should('not.exist')
-        cy.contains('Wash the clothes').should('not.be.visible')
-        cy.get('input').type('Wash the clothes{enter}')
-        cy.contains('Wash the clothes').should('exist')
-        cy.contains('Wash the clothes').should('be.visible')
+        //cy.contains('Wash the clothes').should('not.be.visible')
+        cy.get('[data-test=new-todo]').type(`${newItem}`)
+        cy.get('[for="toggle-all"]').click()
+        cy.contains(newItem).should('exist')
+        cy.get('.todo-list li').should('have.length', 3).last().should('have.text', newItem)
+        cy.get('[for="toggle-all"]').click()
+
+        cy.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
     })
 
-    it('navigating through 3 tabs', () => {
+    it.skip('navigating through 3 tabs', () => {
         cy.log('Navigating through the tabs')
         cy.contains('All').click()
         cy.url().should('eq', 'https://example.cypress.io/todo#/')
@@ -73,16 +85,24 @@ describe('Test Cases on a test website', () => {
         cy.url().should('eq', 'https://example.cypress.io/todo#/active')
         cy.contains('Completed').click()
         cy.url().should('eq', 'https://example.cypress.io/todo#/completed')
+
+        cy.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
     })
 
-    it('completing first todo item and then remove the item from list', () => {
+    it.skip('completing first todo item and then remove the item from list', () => {
         cy.log('Completing first item in the todo list')
         cy.get(".todo-list li").as('list')
         cy.get('@list').should('have.length', 3)
-        cy.contains('Clear Completed').should(not.be.visible)
+        cy.contains('Clear Completed').should('not.be.visible')
         cy.get(':nth-child(1) > .view > input').click()
-        cy.contains('Clear Completed').should(be.visible)
+        cy.contains('Clear Completed').should('be.visible')
         cy.contains('Clear Completed').click()
         cy.get('@list').should('have.length', 2)
+
+        cy.on('uncaught:exception', (err, runnable) => {
+            return false
+        })
     })
   })
