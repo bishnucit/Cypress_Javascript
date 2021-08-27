@@ -72,14 +72,14 @@ describe('Test Cases on a test website', () => {
         cy.contains('All').click();
         //cy.url().should('eq', 'https://example.cypress.io/todo#/');
         //cy.location('pathname').should('include', 'todo');
-        cy.get('@list').should('have.length', 2)
+        cy.get('@list').should('have.length', 2);
         cy.contains('Active').click();
         //cy.url().should('eq', 'https://example.cypress.io/todo#/active');
-        cy.get('@list').should('have.length', 2)
+        cy.get('@list').should('have.length', 2);
         cy.contains('Completed').click();
         //cy.url().should('eq', 'https://example.cypress.io/todo#/completed');
         //cy.location('pathname').should('include', 'completed');
-        cy.get('@list').should('have.length', 0)
+        cy.get('@list').should('have.length', 0);
     });
 
     it('TC008 - completing first todo item and then remove the item from list', () => {
@@ -87,7 +87,7 @@ describe('Test Cases on a test website', () => {
         cy.get(".todo-list li").as('list');
         cy.get('@list').should('have.length', 2);
         //cy.contains('Clear Completed').should('not.be.visible');
-        cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check()
+        cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check();
         cy.get('.footer > .todo-button').should('be.visible');
         cy.get('.footer > .todo-button').click();
         cy.get('@list').should('have.length', 1);
