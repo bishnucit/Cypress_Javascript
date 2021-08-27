@@ -17,10 +17,6 @@ const testURL = 'https://example.cypress.io/todo';
 describe('Test Cases on a test website', () => {
 
     beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
     cy.visit(testURL)
   })
 
@@ -52,26 +48,25 @@ describe('Test Cases on a test website', () => {
         cy.get(':nth-child(2) > .view > label').should('have.text', 'Walk the dog');
     });
 
-    it.skip('TC005 - remove first default item', () =>{
+    it('TC005 - remove first default item', () =>{
         cy.log('Trying to remove first list item, doesnot work so will be skipped');
         //cy.contains('Pay electric bill').get('.todo-button').as('closeBtn');
         //cy.get('@closeBtn').click({ force: true });
-        cy.contains('Pay electric bill').find('.destroy').invoke('show').click({ force: true });
+        cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check();
+        cy.contains('Pay electric bill').parent().find('.todo-button').invoke('show').click({ force: true });
+        //cy.contains('Pay electric bill').find('.destroy').invoke('show').click({ force: true });
     });
 
-    it('TC007 - adding a new todo item', () => {
+    it('TC006 - adding a new todo item', () => {
         cy.log('Adding a new todo item');
         const newItem = 'Wash the clothes';
-
         cy.contains('Wash the clothes').should('not.exist');
         //cy.contains('Wash the clothes').should('not.be.visible');
         cy.get('[data-test=new-todo]').type(`${newItem}{enter}`);
-
         cy.get('.todo-list li').should('have.length', 3).last().should('have.text', newItem);
-
     });
 
-    it('TC008 - navigating through 3 tabs', () => {
+    it('TC007 - navigating through 3 tabs', () => {
         cy.log('Navigating through the tabs');
         cy.get(".todo-list li").as('list');
         cy.contains('All').click();
@@ -87,7 +82,7 @@ describe('Test Cases on a test website', () => {
         cy.get('@list').should('have.length', 0)
     });
 
-    it('TC009 - completing first todo item and then remove the item from list', () => {
+    it('TC008 - completing first todo item and then remove the item from list', () => {
         cy.log('Completing first item in the todo list');
         cy.get(".todo-list li").as('list');
         cy.get('@list').should('have.length', 2);
@@ -98,27 +93,31 @@ describe('Test Cases on a test website', () => {
         cy.get('@list').should('have.length', 1);
     });
 
-    context( 'Scenario1 - When list is empty', () => {
+    context( 'Scenario1 - When list has 1 item', () => {
         beforeEach(() => {
             //cy.log('Removes the default items for Scenario 1');
             cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check();
-            cy.contains('Walk the dog').parent().find('input[type=checkbox]').check();
-    })
+            //cy.contains('Walk the dog').parent().find('input[type=checkbox]').check();
+            cy.get('.todo-list li').should('have.length', 2);
+        });
 
-        it('TC010 - Verify the active list is empty', () => {
+        it('TC09 - Verify the active list is 1', () => {
             cy.log('Default items should not exist check');
             cy.contains('Active').click();
-            cy.get('.todo-list li').should('have.length', 0);
+            cy.get('.todo-list li').should('have.length', 1);
             cy.contains('Pay electric bill').should('not.exist');
-            cy.contains('Walk the dog').should('not.exist');
-        });
-
-        it('TC011 - Verify the completed list has 2 elements', () => {
-            cy.log('2 items should exist');
-            cy.contains('Completed').click();
-            cy.get('.todo-list li').should('have.length', 2);
-            cy.contains('Pay electric bill').should('exist');
             cy.contains('Walk the dog').should('exist');
         });
+
+        it('TC010 - Verify the completed list has 2 elements', () => {
+            cy.log('2 items should exist');
+            cy.contains('Completed').click();
+            cy.get('.todo-list li').should('have.length', 1);
+            cy.contains('Pay electric bill').should('exist');
+            cy.contains('Walk the dog').should('not.exist');
+        });
     });
+    
   });
+
+//ALL PASS - https://prnt.sc/1qm5awy
