@@ -49,7 +49,7 @@ describe('Test Cases on a test website', () => {
     });
 
     it('TC005 - remove first default item', () =>{
-        cy.log('Trying to remove first list item, doesnot work so will be skipped');
+        cy.log('Removing first item after completing it');
         //cy.contains('Pay electric bill').get('.todo-button').as('closeBtn');
         //cy.get('@closeBtn').click({ force: true });
         cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check();
