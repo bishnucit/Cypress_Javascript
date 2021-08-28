@@ -60,7 +60,7 @@ describe('Test Cases on a test website', () => {
     // test ends because it's attached to 'cy'
     cy.on('window:before:unload', (e) => {
     // no return value on the event
-      expect(e.returnValue).to.be.undefined
+      expect(e.returnValue).to.be.empty//can also be undefined
     });
     cy.on('window:unload', (e) => {
       // using mocha's async done callback to finish
