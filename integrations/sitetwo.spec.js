@@ -56,6 +56,7 @@ describe('Test Cases on a test website', () => {
     });
 
   it('TC002 Navigating to A/B testing page verifying click navigation - ', (done) => {
+    cy.log('Navigating to A/B testing page');
     // this event will automatically be unbound when this
     // test ends because it's attached to 'cy'
     cy.on('window:before:unload', (e) => {
@@ -69,5 +70,42 @@ describe('Test Cases on a test website', () => {
       done();
     });
     cy.contains('A/B Testing').click();
+    cy.contains('A/B Test Variation 1').should('be.visible');
+    });
+
+  context('Page 2 - Add/Remove Elements page testing', () => {
+    beforeEach(() => {
+      cy.contains('Add/Remove Elements').click();
+      cy.get('.example').should('exist');
+    });
+
+      it('TC003 - Add 5 items and verify if 5 buttons are shown', () => {
+          for (let i = 0; i < 5; i++) {
+              cy.get('[onclick="addElement()"]').click();
+            }
+          cy.get('button:visible:contains("Delete")').should('have.length', 5);
+       });
+
+      it('TC004 - Add 2 items and delete 2 of them', () => {
+        for(let i = 0; i<2; i++){
+          cy.get('[onclick="addElement()"]').click();
+        }
+        cy.get('button:visible:contains("Delete")').should('have.length', 2);
+        cy.get('#elements > :nth-child(1)').click();
+        cy.get('button:visible:contains("Delete")').should('have.length', 1);
+        cy.get('#elements > :nth-child(1)').click();
+        cy.get('Delete').should('not.exist');
+       });
+
+      it('TC004 - Add 6 items and delete 1st and last of them', () => {
+        for(let i = 0; i<6; i++){
+          cy.get('[onclick="addElement()"]').click();
+        }
+        cy.get('button:visible:contains("Delete")').should('have.length', 6);
+        cy.get('#elements > :nth-child(6)').click();
+        cy.get('button:visible:contains("Delete")').should('have.length', 5);
+        cy.get('#elements > :nth-child(1)').click();
+        cy.get('button:visible:contains("Delete")').should('have.length', 4);
+       });
     });
 });
