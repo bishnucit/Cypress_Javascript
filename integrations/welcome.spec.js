@@ -98,6 +98,8 @@ describe('Test Cases on a test website', () => {
             //cy.log('Removes the default items for Scenario 1');
             cy.contains('Pay electric bill').parent().find('input[type=checkbox]').check();
             //cy.contains('Walk the dog').parent().find('input[type=checkbox]').check();
+            cy.get('.todo-list li.completed label').should('have.css', 'text-decoration', 'line-through solid rgb(205, 205, 205)');
+            cy.get('.todo-list li.completed label').should('have.css', 'color', 'rgb(205, 205, 205)');
             cy.get('.todo-list li').should('have.length', 2);
         });
 
@@ -117,7 +119,7 @@ describe('Test Cases on a test website', () => {
             cy.contains('Walk the dog').should('not.exist');
         });
     });
-    
+
   });
 
 //ALL PASS - https://prnt.sc/1qm5awy
