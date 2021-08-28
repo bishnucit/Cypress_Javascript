@@ -97,7 +97,7 @@ describe('Test Cases on a test website', () => {
         cy.get('Delete').should('not.exist');
        });
 
-      it('TC004 - Add 6 items and delete 1st and last of them', () => {
+      it('TC005 - Add 6 items and delete 1st and last of them', () => {
         for(let i = 0; i<6; i++){
           cy.get('[onclick="addElement()"]').click();
         }
@@ -108,4 +108,37 @@ describe('Test Cases on a test website', () => {
         cy.get('button:visible:contains("Delete")').should('have.length', 4);
        });
     });
+
+  context('Page 3 - Auth page testing', () => {
+    it('TC006 - Login with username and password into a protected page', () => {
+        cy.visit("http://the-internet.herokuapp.com/basic_auth", {
+            auth: {
+                username: 'admin',
+                password: 'admin'
+            }});
+        cy.get('p').should('be.visible');
+    });
+
+    it('TC007 - Login with wrong username and password into a protected page', () => {
+        //Cypress on receiving 401 error stops the code so failstatuscode false is passed to ignore that
+        cy.visit("http://the-internet.herokuapp.com/basic_auth",{failOnStatusCode: false},  {
+            auth: {
+                username: '',
+                password: ''
+            }});
+        cy.get('p').should('not.exist');
+        cy.contains('Not authorized').should('be.visible');
+    });
+  });
+
+  context('Page 4 - Broken image page testing', () => {
+        beforeEach(() => {
+            cy.contains('Broken Images').click();
+            cy.get('.example').should('exist');
+            });
+
+        it('TC008 - Navigate to broken image page and verify page should show 3 image', () => {
+            cy.get('.example img').should('have.length', 3);
+        });
+     });
 });
