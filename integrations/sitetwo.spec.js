@@ -140,5 +140,15 @@ describe('Test Cases on a test website', () => {
         it('TC008 - Navigate to broken image page and verify page should show 3 image', () => {
             cy.get('.example img').should('have.length', 3);
         });
+        
+        it('TC009 - Verify the images are loading fine, height and width are > 0 when loads  ', () => {
+          cy.get('img', { includeShadowDom: true }).filter('[src]').filter(':visible').should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
+        });
+
+        it('TC010 - Verifies the root url of all images starts with img/something', () =>{
+            cy.get('.example').find('>img')
+        });
+      
+      
      });
 });
