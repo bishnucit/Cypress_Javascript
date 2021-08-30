@@ -140,15 +140,55 @@ describe('Test Cases on a test website', () => {
         it('TC008 - Navigate to broken image page and verify page should show 3 image', () => {
             cy.get('.example img').should('have.length', 3);
         });
-        
+
         it('TC009 - Verify the images are loading fine, height and width are > 0 when loads  ', () => {
           cy.get('img', { includeShadowDom: true }).filter('[src]').filter(':visible').should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
         });
 
-        it('TC010 - Verifies the root url of all images starts with img/something', () =>{
-            cy.get('.example').find('>img')
+        it('TC010 - Verifies the root url of all images have blank text', () =>{
+            cy.get('.example').find('>img').should('have.text', '');
+            cy.screenshot('broken_image_verification');
+            //cypress is not made for this type of checking so best option is to take screenshots for manual verification.
         });
-      
-      
+     });
+
+  context('Page 5 - Challenging page testing', () => {
+        beforeEach(() => {
+            cy.contains('Challenging DOM').click();
+            cy.get('.large-centered').should('exist');
+            });
+
+        it('TC011 - Verify all element are visible', () => {
+            cy.get('.columns').find('.button:first').should('exist');
+            cy.get('.columns').find('.alert').should('exist');
+            cy.get('.columns').find('.success').should('exist');
+            cy.get('.columns>.button').should('have.length', 3);
+            cy.get('#canvas').should('exist');
+            cy.get('#content > div > div > div > div.large-10.columns > table').should('exist');
+        });
+
+        it('TC012 - Click alert button and verify the content changes', () => {
+            cy.wait(2000);
+            cy.screenshot('before_click_alert.png');
+            cy.get('.columns').find('.alert').click();
+            cy.wait(2000);
+            cy.screenshot('after_click_alert.png');
+        });
+
+        it('TC013 - Click success button and verify the content changes', () => {
+            cy.wait(2000);
+            cy.screenshot('before_click_success.png');
+            cy.get('.columns').find('.success').click();
+            cy.wait(2000);
+            cy.screenshot('after_click_success.png');
+        });
+
+        it('TC014 - Click first button and verify the content changes', () => {
+            cy.wait(2000);
+            cy.screenshot('before_click_first.png');
+            cy.get('.columns').find('.button:first').click();
+            cy.wait(2000);
+            cy.screenshot('after_click_first.png');
+        });
      });
 });
