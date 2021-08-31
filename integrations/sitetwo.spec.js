@@ -190,5 +190,44 @@ describe('Test Cases on a test website', () => {
             cy.wait(2000);
             cy.screenshot('after_click_first.png');
         });
+
+        it('TC015 - Verify the contents of the table and verify all edit/delete buttons are working', () => {
+            cy.contains('Lorem').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Iuvaret' + i).should('be.visible');
+            }
+            cy.contains('Ipsum').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Apeirian' + i).should('be.visible');
+            }
+            cy.contains('Dolor').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Adipisci' + i).should('be.visible');
+            }
+            cy.contains('Sit').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Definiebas' + i).should('be.visible');
+            }
+            cy.contains('Amet').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Consequuntur' + i).should('be.visible');
+            }
+            cy.contains('Diceret').should('be.visible');
+            for(let i=0;i<10;i++){
+                cy.contains('Phaedrum' + i).should('be.visible');
+            }
+
+            for(let i=1;i<10;i++){
+                cy.get(':nth-child(' + i +') > :nth-child(7) > [href="#edit"]').click();
+                cy.location().should((loc) => {
+                expect(loc.href).to.eq('http://the-internet.herokuapp.com/challenging_dom#edit')
+                });
+
+                cy.get(':nth-child(' + i +') > :nth-child(7) > [href="#delete"]').click();
+                cy.location().should((loc) => {
+                expect(loc.href).to.eq('http://the-internet.herokuapp.com/challenging_dom#delete')
+                });
+            }
+        });
      });
 });
