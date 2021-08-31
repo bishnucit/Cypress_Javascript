@@ -230,4 +230,34 @@ describe('Test Cases on a test website', () => {
             }
         });
      });
+
+      context('Page 6 - Checkboxes page testing', () => {
+        beforeEach(() => {
+          cy.contains('Checkboxes').click();
+          cy.get('.example').should('exist');
+          });
+
+          it('TC016 - Verify the contents of the table and verify all edit/delete buttons are working', () => {
+              cy.get('#checkboxes > :nth-child(1)').should('not.be.checked')
+              cy.get('#checkboxes > :nth-child(3)').should('be.checked')
+          });
+
+          it('TC017 - Verify if checkbox is unchecked, check it and vice versa', () => {
+            cy.get('#checkboxes > :nth-child(1)').then(($chk) => {
+                if($chk.find('checked')) {
+                    cy.get('#checkboxes > :nth-child(1)').check();
+                }else{
+                    cy.get('#checkboxes > :nth-child(1)').uncheck();
+                }
+            });
+
+            cy.get('#checkboxes > :nth-child(3)').then(($chk) => {
+                if($chk.find('checked')) {
+                    cy.get('#checkboxes > :nth-child(3)').uncheck();
+                }else{
+                    cy.get('#checkboxes > :nth-child(3)').check();
+                }
+            });
+          });
+     });
 });
