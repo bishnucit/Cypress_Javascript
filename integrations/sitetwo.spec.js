@@ -260,4 +260,51 @@ describe('Test Cases on a test website', () => {
             });
           });
      });
+
+
+     context('Page 8 - Disappearing Elements page check', () => {
+        beforeEach(() => {
+            cy.contains('Disappearing Elements').click();
+            cy.get('.example').should('exist');
+            });
+
+            it('TC016 - Verify all the elements are visible and existing', () => {
+                cy.contains('Home').should('exist');
+                cy.contains('About').should('exist');
+                cy.contains('Contact Us').should('exist');
+                cy.contains('Portfolio').should('exist');
+                cy.contains('Gallery').should('exist');
+            });
+
+            it('TC017 - Verify on clicking Home button redirects to proper page', () => {
+                cy.contains('Home').click();
+                cy.location().should((loc) => {
+                expect(loc.href).to.eq('http://the-internet.herokuapp.com/')
+                });
+            });
+            it('TC018 - Verify on clicking About button redirects to proper page', () => {
+                cy.contains('About').click();
+                cy.location().should((loc) => {
+                    expect(loc.href).to.eq('http://the-internet.herokuapp.com/about/')
+                    });
+            });
+            it('TC019 - Verify on clicking Contact us button redirects to proper page', () => {
+                cy.contains('Contact Us').click();
+                cy.location().should((loc) => {
+                    expect(loc.href).to.eq('http://the-internet.herokuapp.com/contact-us/')
+                    });
+            });
+            it('TC020 - Verify on clicking Portfolio button redirects to proper page', () => {
+                cy.contains('Portfolio').click();
+                cy.location().should((loc) => {
+                    expect(loc.href).to.eq('http://the-internet.herokuapp.com/portfolio/')
+                    });
+            });
+            it('TC021 - Verify on clicking Gallery button redirects to proper page', () => {
+                cy.contains('Gallery').click();
+                cy.location().should((loc) => {
+                    expect(loc.href).to.eq('http://the-internet.herokuapp.com/gallery/')
+                    });
+            });
+     });
 });
