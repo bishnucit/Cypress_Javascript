@@ -269,7 +269,7 @@ describe('Test Cases on a test website', () => {
             });
 
             it('TC016 - Verify all the elements are visible and existing', () => {
-                cy.contains('Home').should('exist');
+                cy.contains('Home',{ timeout: 10000 }).should('exist');
                 cy.contains('About').should('exist');
                 cy.contains('Contact Us').should('exist');
                 cy.contains('Portfolio').should('exist');
