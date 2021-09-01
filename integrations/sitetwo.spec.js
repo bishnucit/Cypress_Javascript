@@ -301,7 +301,7 @@ describe('Test Cases on a test website', () => {
                     });
             });
             it('TC021 - Verify on clicking Gallery button redirects to proper page', () => {
-                cy.contains('Gallery').click();
+                cy.get('Gallery').click({force:true});
                 cy.location().should((loc) => {
                     expect(loc.href).to.eq('http://the-internet.herokuapp.com/gallery/')
                     });
