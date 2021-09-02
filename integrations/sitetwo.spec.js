@@ -262,18 +262,18 @@ describe('Test Cases on a test website', () => {
      });
 
 
-     context('Page 8 - Disappearing Elements page check', () => {
+     context('Page 9 - Disappearing Elements page check', () => {
         beforeEach(() => {
             cy.contains('Disappearing Elements').click();
             cy.get('.example').should('exist');
             });
 
             it('TC016 - Verify all the elements are visible and existing', () => {
-                cy.contains('Home',{ timeout: 10000 }).should('exist');
+                cy.contains('Home').should('exist');
                 cy.contains('About').should('exist');
                 cy.contains('Contact Us').should('exist');
                 cy.contains('Portfolio').should('exist');
-                cy.contains('Gallery').should('exist');
+                cy.contains('Gallery',{ timeout: 10000 }).should('exist');
             });
 
             it('TC017 - Verify on clicking Home button redirects to proper page', () => {
@@ -301,10 +301,32 @@ describe('Test Cases on a test website', () => {
                     });
             });
             it('TC021 - Verify on clicking Gallery button redirects to proper page', () => {
-                cy.get('Gallery').click({force:true});
+                cy.contains('Gallery').click({force:true});
                 cy.location().should((loc) => {
                     expect(loc.href).to.eq('http://the-internet.herokuapp.com/gallery/')
                     });
+            });
+     });
+
+     context('Page 10 - Drag and Drop page check', () => {
+        beforeEach(() => {
+            cy.contains('Drag and Drop').click();
+            cy.get('.example').should('exist');
+            });
+
+            it('TC022 - Drag from one box to another', () => {
+                //using command
+                cy.get("#column-a").dragTo("#column-b");
+                cy.screenshot('TC022_drag1.jpg');
+                cy.get('h3').click({force:true});
+                cy.get("#column-b").dragTo("#column-a");
+                cy.screenshot('TC022_drag2.jpg');
+            });
+
+            it('TC023 - Drag from one box to another using direct code', () => {
+                cy.get('#column-a').trigger('dragstart');
+                cy.get('#column-b').trigger('dragenter', { force: true });
+                cy.get('#column-b').trigger('drop', { force: true });
             });
      });
 });
