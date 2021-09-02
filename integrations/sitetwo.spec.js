@@ -313,8 +313,13 @@ describe('Test Cases on a test website', () => {
             cy.contains('Drag and Drop').click();
             cy.get('.example').should('exist');
             });
+         
+             it('TC023 - Drag from one box to another', () => {
+                    cy.get("#column-a").should("exist");
+                    cy.get("#column-b").should("exist");
+                });
 
-            it('TC022 - Drag from one box to another', () => {
+            it('TC023 - Drag from one box to another', () => {
                 //using command
                 cy.get("#column-a").dragTo("#column-b");
                 cy.screenshot('TC022_drag1.jpg');
@@ -323,7 +328,7 @@ describe('Test Cases on a test website', () => {
                 cy.screenshot('TC022_drag2.jpg');
             });
 
-            it('TC023 - Drag from one box to another using direct code', () => {
+            it('TC024 - Drag from one box to another using direct code', () => {
                 cy.get('#column-a').trigger('dragstart');
                 cy.get('#column-b').trigger('dragenter', { force: true });
                 cy.get('#column-b').trigger('drop', { force: true });
