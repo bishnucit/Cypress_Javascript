@@ -313,13 +313,8 @@ describe('Test Cases on a test website', () => {
             cy.contains('Drag and Drop').click();
             cy.get('.example').should('exist');
             });
-         
-             it('TC023 - Drag from one box to another', () => {
-                    cy.get("#column-a").should("exist");
-                    cy.get("#column-b").should("exist");
-                });
 
-            it('TC023 - Drag from one box to another', () => {
+            it('TC022 - Drag from one box to another', () => {
                 //using command
                 cy.get("#column-a").dragTo("#column-b");
                 cy.screenshot('TC022_drag1.jpg');
@@ -328,10 +323,87 @@ describe('Test Cases on a test website', () => {
                 cy.screenshot('TC022_drag2.jpg');
             });
 
-            it('TC024 - Drag from one box to another using direct code', () => {
+            it('TC023 - Drag from one box to another using direct code', () => {
                 cy.get('#column-a').trigger('dragstart');
                 cy.get('#column-b').trigger('dragenter', { force: true });
                 cy.get('#column-b').trigger('drop', { force: true });
+            });
+     });
+
+     context('Page 12 - Dynamic Content page check', () => {
+        beforeEach(() => {
+            cy.contains('Dynamic Content').click();
+            cy.get('.row').should('exist');
+            });
+
+            it('TC024 - Verify 3 image and 3 desc are visible', () => {
+                cy.get(':nth-child(1) > .large-2 > img').should('exist');
+                cy.get(':nth-child(1) > .large-10').should('exist');
+                cy.get(':nth-child(4) > .large-2 > img').should('exist');
+                cy.get(':nth-child(4) > .large-10').should('exist');
+                cy.get(':nth-child(7) > .large-2 > img').should('exist');
+                cy.get('#content > :nth-child(7) > .large-10').should('exist');
+            });
+
+            it('TC025 - verify that the last desc doesnot match after link revisted', () => {
+                cy.get('#content > :nth-child(7) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.get(':nth-child(3) > a').click();
+                    cy.get('#content > :nth-child(7) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
+            });
+
+            it('TC026 - verify that the last desc doesnot match after page refresh', () => {
+                cy.get('#content > :nth-child(7) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.reload();
+                    cy.get('#content > :nth-child(7) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
+            });
+
+
+            it('TC027 - verify that the first desc doesnot match after link revisted', () => {
+                cy.get('#content > :nth-child(1) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.get(':nth-child(3) > a').click();
+                    cy.get('#content > :nth-child(1) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
+            });
+
+            it('TC028 - verify that the first desc doesnot match after page refresh', () => {
+                cy.get('#content > :nth-child(1) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.reload();
+                    cy.get('#content > :nth-child(1) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
+            });
+
+            it('TC029 - verify that the middle desc doesnot match after link revisted', () => {
+                cy.get('#content > :nth-child(4) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.get(':nth-child(3) > a').click();
+                    cy.get('#content > :nth-child(4) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
+            });
+
+            it('TC030 - verify that the middle desc doesnot match after page refresh', () => {
+                cy.get('#content > :nth-child(4) > .large-10').then(($desc) =>{
+                    const txt = $desc.text();
+                    cy.reload();
+                    cy.get('#content > :nth-child(4) > .large-10').should(($desc2) => {
+                        expect($desc2.text()).not.to.eq(txt);
+                    });
+                });
             });
      });
 });
