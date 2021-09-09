@@ -485,7 +485,35 @@ describe('Test Cases on a test website', () => {
                 cy.waitForLoader();
                 cy.wait(5000);
                 cy.get('#finish > h4').should('be.visible');
+            });
+     });
 
+     context('Page 15 - Entry Ad page check', () => {
+        beforeEach(() => {
+            cy.contains('Entry Ad').click();
+            cy.get('.example').should('exist');
+            cy.get('.modal > .modal-title > h3').should('exist');
+            });
+
+            it('TC036 - Verify modal ad page', () => {
+                cy.get('.modal > .modal-title > h3').should('exist');
+                cy.get('.modal-footer > p').should('exist');
+                cy.get('.modal-footer > p').click();
+                cy.get('.example > h3').should('have.text', 'Entry Ad');
+                cy.get('.example > p:first').should('have.text', 'Displays an ad on page load.');
+            });
+
+            it('TC037 - verify modal after click', () => {
+                cy.get('.modal > .modal-title > h3').should('exist');
+                cy.get('.modal-footer > p').should('exist');
+                cy.get('.modal-footer > p').click();
+                cy.get('.example > h3').should('have.text', 'Entry Ad');
+                cy.get('#restart-ad').click();
+                cy.wait(2000);
+                cy.get('.modal > .modal-title > h3').should('exist');
+                cy.get('.modal-footer > p').should('exist');
+                cy.get('.modal-footer > p').click();
+                cy.get('.example > h3').should('have.text', 'Entry Ad');
             });
      });
 
