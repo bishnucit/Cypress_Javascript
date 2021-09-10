@@ -501,6 +501,7 @@ describe('Test Cases on a test website', () => {
                 cy.get('.modal-footer > p').click();
                 cy.get('.example > h3').should('have.text', 'Entry Ad');
                 cy.get('.example > p:first').should('have.text', 'Displays an ad on page load.');
+
             });
 
             it('TC037 - verify modal after click', () => {
@@ -514,6 +515,30 @@ describe('Test Cases on a test website', () => {
                 cy.get('.modal-footer > p').should('exist');
                 cy.get('.modal-footer > p').click();
                 cy.get('.example > h3').should('have.text', 'Entry Ad');
+            });
+     });
+
+
+     context('Page 16 - Exit Intent page check', () => {
+        beforeEach(() => {
+            cy.contains('Exit Intent').click();
+            cy.get('.example').should('exist');
+            cy.get('p').should('exist');
+            });
+
+            it('TC038 - Verify modal shows on exit page', () => {
+                cy.get(".modal").should('not.be.visible');
+                cy.get("#flash-messages").trigger("mouseover");
+                cy.get("#flash-messages").trigger("mouseleave");
+                cy.get(".modal").should('be.visible');
+            });
+
+            it('TC039 - Verify modal is closed after closed when exit page', () => {
+                cy.get("#flash-messages").trigger("mouseover");
+                cy.get("#flash-messages").trigger("mouseleave");
+                cy.get(".modal").should('be.visible');
+                cy.get('.modal-footer > p').click();
+                cy.get(".modal").should('not.be.visible');
             });
      });
 
