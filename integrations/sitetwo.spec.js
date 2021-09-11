@@ -233,7 +233,7 @@ describe('Test Cases on a test website', () => {
         });
      });
 
-      context('Page 6 - Checkboxes page testing', () => {
+    context('Page 6 - Checkboxes page testing', () => {
         beforeEach(() => {
           cy.contains('Checkboxes').click();
           cy.get('.example').should('exist');
@@ -264,7 +264,7 @@ describe('Test Cases on a test website', () => {
      });
 
 
-     context('Page 9 - Disappearing Elements page check', () => {
+    context('Page 9 - Disappearing Elements page check', () => {
         beforeEach(() => {
             cy.contains('Disappearing Elements').click();
             cy.get('.example').should('exist');
@@ -310,7 +310,7 @@ describe('Test Cases on a test website', () => {
             });
      });
 
-     context('Page 10 - Drag and Drop page check', () => {
+    context('Page 10 - Drag and Drop page check', () => {
         beforeEach(() => {
             cy.contains('Drag and Drop').click();
             cy.get('.example').should('exist');
@@ -332,7 +332,7 @@ describe('Test Cases on a test website', () => {
             });
      });
 
-     context('Page 12 - Dynamic Content page check', () => {
+    context('Page 12 - Dynamic Content page check', () => {
         beforeEach(() => {
             cy.contains('Dynamic Content').click();
             cy.get('.row').should('exist');
@@ -490,7 +490,7 @@ describe('Test Cases on a test website', () => {
             });
      });
 
-     context('Page 15 - Entry Ad page check', () => {
+    context('Page 15 - Entry Ad page check', () => {
         beforeEach(() => {
             cy.contains('Entry Ad').click();
             cy.get('.example').should('exist');
@@ -521,7 +521,7 @@ describe('Test Cases on a test website', () => {
      });
 
 
-     context('Page 16 - Exit Intent page check', () => {
+    context('Page 16 - Exit Intent page check', () => {
         beforeEach(() => {
             cy.contains('Exit Intent').click();
             cy.get('.example').should('exist');
@@ -587,6 +587,44 @@ describe('Test Cases on a test website', () => {
                 cy.readFile('downloads_'+date+'_'+time+'/luminoslogo.png').should('exist');
             });
      });
+
+    context('Page 18 - File upload page check', () => {
+        beforeEach(() => {
+            cy.contains('File Upload').click();
+            cy.get('.example').should('exist');
+            cy.get('h3').should('exist');
+            });
+
+            it('TC042 - Verify upload page components', () => {
+                cy.get('.example > p').should('exist');
+                cy.get('#file-upload').should('exist');
+                cy.get('#file-submit').should('exist');
+                cy.get('#drag-drop-upload').should('exist');
+            });
+
+            it('TC043 - verify error thrown on uploading without any file', () => {
+                cy.get('#file-submit').should('exist');
+                cy.get('#file-submit').click();
+                cy.get('body > h1').should('have.text','Internal Server Error');
+            });
+
+            it('TC044 - verify file uploads successfully when uploaded through upload button', () => {
+                const filepath = 'images/80x80.png';
+                cy.get('#file-upload').attachFile(filepath);
+                cy.get('#file-submit').click();
+                cy.wait(1000);
+                cy.get('.example > h3').should('have.text', 'File Uploaded!');
+                cy.get('#uploaded-files').should('have.text', '\n    80x80.png\n  ');
+            });
+
+            it('TC045 - verify file uploads successfully when uploaded through upload drag and drop area', () => {
+                const filepath = 'images/80x80.png';
+                cy.get('#drag-drop-upload').attachFile(filepath, { subjectType: 'drag-n-drop' });
+                cy.wait(1000);
+                cy.get('#drag-drop-upload > div > div.dz-details > div > span').should('have.text', '80x80.png');
+                cy.get('.dz-success-mark').should('exist');
+            });
+    });
 
 
 });
