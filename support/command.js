@@ -23,6 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+require('cypress-downloadfile/lib/downloadFileCommand')
+
   Cypress.Commands.add('waitForLoader', () => {
     cy.get('#loading', { timeout: 5000 }).should('have.length', 1)
   });
