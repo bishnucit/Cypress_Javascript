@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 
+npm install cypress-downloadfile (install global level)
 npm install --save-dev cypress (install project level)
 --------------------------------------------------------------------------------------------------------------
 .\node_modules\.bin\cypress.cmd install --force (sometimes installing doesnot work so we need force reinstall)
