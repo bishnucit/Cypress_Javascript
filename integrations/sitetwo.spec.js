@@ -1,4 +1,6 @@
 /// <reference types="cypress" />
+/// <reference types="cypress-downloadfile"/>
+
 
 const testURL = 'http://the-internet.herokuapp.com/';
 describe('Test Cases on a test website', () => {
@@ -539,6 +541,50 @@ describe('Test Cases on a test website', () => {
                 cy.get(".modal").should('be.visible');
                 cy.get('.modal-footer > p').click();
                 cy.get(".modal").should('not.be.visible');
+            });
+     });
+
+
+
+    context('Page 17 - File Downloads page check', () => {
+        beforeEach(() => {
+            cy.contains('File Download').click();
+            cy.get('.example').should('exist');
+            cy.get('h3').should('exist');
+            });
+
+            it('TC040 - Verify download page', () => {
+                cy.get('[href="download/Vaccinate.jpg"]').should('exist');
+                cy.get('[href="download/some-file.txt"]').should('exist');
+                cy.get('[href="download/sample.png"]').should('exist');
+                cy.get('[href="download/luminoslogo.png"]').should('exist');
+            });
+
+            it('TC041 - verify file exists after downloading', () => {
+                //using date to create a folder to avoid duplicate
+                var today = new Date();
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                var time = today.getHours() + "." + today.getMinutes() + "." + today.getSeconds();
+
+                cy.readFile('downloads_'+date+'_'+time+'/Vaccinate.jpg').should('not.exist');
+                cy.downloadFile('http://the-internet.herokuapp.com/download/Vaccinate.jpg','downloads_'+date+'_'+time,'Vaccinate.jpg');
+                cy.wait(2000);
+                cy.readFile('downloads_'+date+'_'+time+'/Vaccinate.jpg').should('exist');
+
+                cy.readFile('downloads_'+date+'_'+time+'/some-file.txt').should('not.exist');
+                cy.downloadFile('http://the-internet.herokuapp.com/download/some-file.txt','downloads_'+date+'_'+time,'some-file.txt');
+                cy.wait(2000);
+                cy.readFile('downloads_'+date+'_'+time+'/some-file.txt').should('exist');
+
+                cy.readFile('downloads_'+date+'_'+time+'/sample.png').should('not.exist');
+                cy.downloadFile('http://the-internet.herokuapp.com/download/sample.png','downloads_'+date+'_'+time,'sample.png');
+                cy.wait(2000);
+                cy.readFile('downloads_'+date+'_'+time+'/sample.png').should('exist');
+
+                cy.readFile('downloads_'+date+'_'+time+'/luminoslogo.png').should('not.exist');
+                cy.downloadFile('http://the-internet.herokuapp.com/download/luminoslogo.png','downloads_'+date+'_'+time,'luminoslogo.png');
+                cy.wait(2000);
+                cy.readFile('downloads_'+date+'_'+time+'/luminoslogo.png').should('exist');
             });
      });
 
