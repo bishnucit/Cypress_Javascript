@@ -24,13 +24,15 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-require('cypress-downloadfile/lib/downloadFileCommand')
+require('cypress-downloadfile/lib/downloadFileCommand');
 
-  Cypress.Commands.add('waitForLoader', () => {
+import 'cypress-file-upload';
+
+Cypress.Commands.add('waitForLoader', () => {
     cy.get('#loading', { timeout: 5000 }).should('have.length', 1)
   });
 
-  Cypress.Commands.add("dragTo", { prevSubject: "element" }, (subject, targetEl) => {
+Cypress.Commands.add("dragTo", { prevSubject: "element" }, (subject, targetEl) => {
     cy.wrap(subject).trigger("dragstart");
     cy.get(targetEl).trigger("drop");
     cy.get(targetEl).trigger("dragend");
