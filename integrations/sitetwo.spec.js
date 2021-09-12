@@ -626,5 +626,118 @@ describe('Test Cases on a test website', () => {
             });
     });
 
+    context('Page 19 - Floating Menu page check', () => {
+        beforeEach(() => {
+            cy.contains('Floating Menu').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+            it('TC046 - Verify Floating menu page components', () => {
+                cy.get('.example > h3').should('exist');
+                cy.get('[href="#home"]').should('exist');
+                cy.get('[href="#news"]').should('exist');
+                cy.get('[href="#contact"]').should('exist');
+                cy.get('[href="#about"]').should('exist');
+                cy.get('.scroll > :nth-child(1)').should('exist');
+                cy.get('.scroll > :nth-child(2)').should('exist');
+                cy.get('.scroll > :nth-child(3)').should('exist');
+                cy.get('.scroll > :nth-child(4)').should('exist');
+                cy.get('.scroll > :nth-child(5)').should('exist');
+                cy.get('.scroll > :nth-child(6)').should('exist');
+                cy.get('.scroll > :nth-child(7)').should('exist');
+                cy.get('.scroll > :nth-child(8)').should('exist');
+                cy.get('.scroll > :nth-child(9)').should('exist');
+                cy.get('.scroll > :nth-child(10)').should('exist');
+
+            });
+
+            it('TC047 - verify on scrolling to center, bottom and top the menu is visible using scrollto', () => {
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+                cy.scrollTo("center");
+                cy.get('.scroll > :nth-child(6)').should('be.visible');
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+                cy.scrollTo("bottom");
+                cy.get('.scroll > :nth-child(10)').should('be.visible');
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+                cy.scrollTo("top");
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+            });
+
+            it('TC048 - verify on scrolltoview on each element the menu is visible', () => {
+                cy.get('.scroll > :nth-child(1)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(2)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(3)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(4)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(5)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(6)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(7)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(8)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(9)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+
+                cy.get('.scroll > :nth-child(10)').scrollIntoView();
+                cy.get('[href="#home"]').should('be.visible');
+                cy.get('[href="#news"]').should('be.visible');
+                cy.get('[href="#contact"]').should('be.visible');
+                cy.get('[href="#about"]').should('be.visible');
+            });
+     });
+
 
 });
