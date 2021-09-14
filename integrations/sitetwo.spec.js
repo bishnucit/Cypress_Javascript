@@ -701,7 +701,7 @@ describe('Test Cases on a test website', () => {
             cy.get('#form_submit').click();
             cy.wait(1000);
             cy.get('body > h1').should('be.visible');
-            cy.contains('Internal Server Error').should('exist')
+            cy.contains('Internal Server Error').should('exist');
         });
 
         it('TC051 - Enter invalid email and click on forget password', () => {
@@ -710,9 +710,74 @@ describe('Test Cases on a test website', () => {
             cy.get('#form_submit').click();
             cy.wait(1000);
             cy.get('body > h1').should('be.visible');
-            cy.contains('Internal Server Error').should('exist')
+            cy.contains('Internal Server Error').should('exist');
         });
      });
+
+    context('Page 21 - Form Authentication page check', () => {
+        beforeEach(() => {
+            cy.viewport(1024, 768);
+            cy.contains('Form Authentication').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h2').should('exist');
+        });
+
+        it('TC052 - Verify page components', () => {
+            cy.get('.subheader').should('exist');
+            cy.get('#username').should('exist');
+            cy.get('#password').should('exist');
+            cy.get('.radius').should('exist');
+        });
+
+        it('TC053 - Enter valid credential and verify logged in', () => {
+            cy.get('#username').should('exist');
+            cy.get('#username').type('tomsmith');
+
+            cy.get('#password').should('exist');
+            cy.get('#password').type('SuperSecretPassword!');
+
+            cy.get('.radius').should('exist');
+            cy.get('.radius').click();
+
+            cy.log('Entering valid credentials')
+            cy.wait(1000);
+
+            cy.get('.success').should('be.visible');
+            cy.get('.example > h2').should('be.visible');
+            cy.log('Login Successful');
+
+            cy.log('Logging out of session');
+            cy.get('.close').click({force: true});
+            cy.log('removing the success message');
+            cy.get('[href="/logout"]').click();
+            cy.wait(1000);
+
+            cy.get('.success').should('be.visible');
+            cy.log('logged out successfully');
+            cy.get('.close').click({force: true});
+            cy.log('removing the logout message');
+            cy.get('success').should('not.exist');
+        });
+
+        it('TC054 - Enter invalid credential and verify error message is shown', () => {
+            cy.get('#username').should('exist');
+            cy.get('#username').type('ab');
+
+            cy.get('#password').should('exist');
+            cy.get('#password').type('cd');
+
+            cy.get('.radius').should('exist');
+            cy.get('.radius').click();
+            cy.log('Entering invalid credentials');
+            cy.wait(1000);
+
+            cy.get('.error').should('exist');
+            cy.log('error message is shown');
+            cy.get('.close').click({force: true});
+            cy.log('removing the error message');
+            cy.get('.error').should('not.exist');
+        });
+    });
 
 
 });
