@@ -3,6 +3,8 @@
 /// <reference types = "cypress-iframe"/>
 
 
+import 'cypress-iframe'
+
 const testURL = 'http://the-internet.herokuapp.com/';
 describe('Test Cases on a test website', () => {
 
@@ -800,18 +802,34 @@ describe('Test Cases on a test website', () => {
             cy.get('[href="/nested_frames"]').should('exist');
             cy.get('[href="/nested_frames"]').click();
 
-            //cy.iframe().find('[name="frame-top"]')
-            //cy.frameLoaded('[name="frame-top"]');
-            //cy.enter().then(getBody => {
-            //    getBody().find('LEFT').should('be.visible');
-            //  });
+            cy.log('Veriying the frame text of top frame by parsing through the document');
+            cy.get('frame[src="/frame_top"]').within($frame => {
+                const [frame_top] = $frame.get();
+
+                const text_l = frame_top.contentDocument.body.getElementsByTagName('frame')[0].contentDocument.body.innerText
+                expect(text_l).to.be.eql('LEFT')
+
+                const text_m = frame_top.contentDocument.body.getElementsByTagName('frame')[1].contentDocument.body.querySelector('div#content').innerText
+                expect(text_m).to.be.eql('MIDDLE')
+
+                const text_r = frame_top.contentDocument.body.getElementsByTagName('frame')[2].contentDocument.body.innerText
+                expect(text_r).to.be.eql('RIGHT')
+            });
+
+            cy.log('Veriying the frame text of bottom frame by parsing through the document');
+            cy.get('frame[src="/frame_bottom"]').within($frame => {
+                const [frame_bottom] = $frame.get();
+                const text_b = frame_bottom.contentDocument.body.innerText;
+                expect(text_b).to.be.eql('BOTTOM');
+            });
         });
 
         it('TC057 - Enter iframe page and test content', () => {
             cy.get('.example > h3').should('exist');
             cy.get('[href="/iframe"]').should('exist');
             cy.get('[href="/iframe"]').click();
-            cy.wait(1000);
+
+            cy.log('Verifying all elements are visible in page');
             cy.get('h3').should('be.visible');
             cy.get(':nth-child(1) > .tox-mbtn__select-label').should('be.visible');
             cy.get(':nth-child(2) > .tox-mbtn__select-label').should('be.visible');
@@ -830,7 +848,60 @@ describe('Test Cases on a test website', () => {
             cy.get('[title="indentation"] > .tox-tbtn--disabled > .tox-icon > svg').should('be.visible');
             cy.get('[aria-label="Increase indent"]').should('be.visible');
             cy.get('.tox-statusbar__path').should('be.visible');
+
+            cy.log('Entering text inside the iframe editor')
             cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation')
+
+            cy.get(':nth-child(1) > .tox-mbtn__select-label').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get(':nth-child(2) > .tox-mbtn__select-label').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get(':nth-child(3) > .tox-mbtn__select-label').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get(':nth-child(4) > .tox-mbtn__select-label').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Undo"]').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[title="history"] > .tox-tbtn--disabled > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[title="styles"] > .tox-tbtn').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[title="styles"] > .tox-tbtn').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Bold"] > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Italic"] > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Align left"] > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Align center"]').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Align right"]').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Justify"] > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[title="indentation"] > .tox-tbtn--disabled > .tox-icon > svg').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('[aria-label="Increase indent"]').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
+
+            cy.get('.tox-statusbar__path').click();
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation');
         });
     });
 
