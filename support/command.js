@@ -27,6 +27,7 @@
 require('cypress-downloadfile/lib/downloadFileCommand');
 
 import 'cypress-file-upload';
+import 'cypress-iframe'
 
 Cypress.Commands.add('waitForLoader', () => {
     cy.get('#loading', { timeout: 5000 }).should('have.length', 1)
@@ -37,3 +38,10 @@ Cypress.Commands.add("dragTo", { prevSubject: "element" }, (subject, targetEl) =
     cy.get(targetEl).trigger("drop");
     cy.get(targetEl).trigger("dragend");
   });
+
+Cypress.Commands.add('getIframe', (iframe) => {
+    return cy.get(iframe)
+        .its('0.contentDocument.body')
+        .should('be.visible')
+        .then(cy.wrap);
+})
