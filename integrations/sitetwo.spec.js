@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 /// <reference types="cypress-downloadfile"/>
+/// <reference types = "cypress-iframe"/>
 
+
+import 'cypress-iframe'
 
 const testURL = 'http://the-internet.herokuapp.com/';
 describe('Test Cases on a test website', () => {
@@ -701,7 +704,7 @@ describe('Test Cases on a test website', () => {
             cy.get('#form_submit').click();
             cy.wait(1000);
             cy.get('body > h1').should('be.visible');
-            cy.contains('Internal Server Error').should('exist');
+            cy.contains('Internal Server Error').should('exist')
         });
 
         it('TC051 - Enter invalid email and click on forget password', () => {
@@ -710,7 +713,7 @@ describe('Test Cases on a test website', () => {
             cy.get('#form_submit').click();
             cy.wait(1000);
             cy.get('body > h1').should('be.visible');
-            cy.contains('Internal Server Error').should('exist');
+            cy.contains('Internal Server Error').should('exist')
         });
      });
 
@@ -779,5 +782,58 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+
+    context('Page 22 - Frames page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Frames').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+        it('TC055 - Verify page components', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('[href="/nested_frames"]').should('exist');
+            cy.get('[href="/iframe"]').should('exist');
+        });
+
+        it('TC056 - Enter nested frames page and test content', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('[href="/nested_frames"]').should('exist');
+            cy.get('[href="/nested_frames"]').click();
+
+            //cy.iframe().find('[name="frame-top"]')
+            //cy.frameLoaded('[name="frame-top"]');
+            //cy.enter().then(getBody => {
+            //    getBody().find('LEFT').should('be.visible');
+            //  });
+        });
+
+        it('TC057 - Enter iframe page and test content', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('[href="/iframe"]').should('exist');
+            cy.get('[href="/iframe"]').click();
+            cy.wait(1000);
+            cy.get('h3').should('be.visible');
+            cy.get(':nth-child(1) > .tox-mbtn__select-label').should('be.visible');
+            cy.get(':nth-child(2) > .tox-mbtn__select-label').should('be.visible');
+            cy.get(':nth-child(3) > .tox-mbtn__select-label').should('be.visible');
+            cy.get(':nth-child(4) > .tox-mbtn__select-label').should('be.visible');
+            cy.get('[aria-label="Undo"]').should('be.visible');
+            cy.get('[title="history"] > .tox-tbtn--disabled > .tox-icon > svg').should('be.visible');
+            cy.get('[title="styles"] > .tox-tbtn').should('be.visible');
+            cy.get('[title="styles"] > .tox-tbtn').should('be.visible');
+            cy.get('[aria-label="Bold"] > .tox-icon > svg').should('be.visible');
+            cy.get('[aria-label="Italic"] > .tox-icon > svg').should('be.visible');
+            cy.get('[aria-label="Align left"] > .tox-icon > svg').should('be.visible');
+            cy.get('[aria-label="Align center"]').should('be.visible');
+            cy.get('[aria-label="Align right"]').should('be.visible');
+            cy.get('[aria-label="Justify"] > .tox-icon > svg').should('be.visible');
+            cy.get('[title="indentation"] > .tox-tbtn--disabled > .tox-icon > svg').should('be.visible');
+            cy.get('[aria-label="Increase indent"]').should('be.visible');
+            cy.get('.tox-statusbar__path').should('be.visible');
+            cy.getIframe('#mce_0_ifr').clear().type('Welcome to automation')
+        });
+    });
 
 });
