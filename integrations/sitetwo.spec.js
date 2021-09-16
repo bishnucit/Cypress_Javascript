@@ -905,4 +905,40 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+    context('Page 23 - Horizontal Slider page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Horizontal Slider').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+        it('TC058 - Verify page components', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('.subheader').should('exist');
+            cy.get('.sliderContainer').should('exist');
+            cy.get('#range').should('have.text','0');
+        });
+
+        it('TC059 - Move slider to middle and check the value beside', () => {
+            cy.get('.sliderContainer').should('exist');
+            cy.get('#content > div > div > input[type=range]').invoke('val', '2.5').trigger('change');
+            cy.get('#range').should('have.text','2.5');
+        });
+
+        it('TC057 -  Move slider to end and check the value beside', () => {
+            cy.get('.sliderContainer').should('exist');
+            cy.get('#content > div > div > input[type=range]').invoke('val', '5.0').trigger('change');
+            cy.get('#range').should('have.text','5');
+        });
+
+        it('TC057 -  move the slider by 1 from min to max', () => {
+            cy.get('.sliderContainer').should('exist');
+            for(let i=0; i<6; i++){
+                cy.get('#content > div > div > input[type=range]').invoke('val', i).trigger('change');
+                cy.get('#range').should('have.text', i);
+            }
+        });
+    });
+
 });
