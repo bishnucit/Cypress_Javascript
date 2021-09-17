@@ -926,18 +926,93 @@ describe('Test Cases on a test website', () => {
             cy.get('#range').should('have.text','2.5');
         });
 
-        it('TC057 -  Move slider to end and check the value beside', () => {
+        it('TC060 -  Move slider to end and check the value beside', () => {
             cy.get('.sliderContainer').should('exist');
             cy.get('#content > div > div > input[type=range]').invoke('val', '5.0').trigger('change');
             cy.get('#range').should('have.text','5');
         });
 
-        it('TC057 -  move the slider by 1 from min to max', () => {
+        it('TC061 -  move the slider by 1 from min to max', () => {
             cy.get('.sliderContainer').should('exist');
             for(let i=0; i<6; i++){
                 cy.get('#content > div > div > input[type=range]').invoke('val', i).trigger('change');
                 cy.get('#range').should('have.text', i);
             }
+        });
+    });
+
+    context('Page 24 - Hovers page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Hovers').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+        it('TC062 - Verify page components', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('.example > h3').should('have.text', 'Hovers');
+            cy.get('.example > p').should('exist');
+
+            cy.get(':nth-child(3) > img').should('exist');
+            cy.get(':nth-child(4) > img').should('exist');
+            cy.get(':nth-child(5) > img').should('exist');
+        });
+
+        it('TC063 - Do mouse over on 3 images and verify the names are proper', () => {
+            cy.get('.example > p').should('exist');
+
+            cy.get(':nth-child(3) > img').should('exist');
+            cy.get(':nth-child(3) > img').trigger('mouseover').click();
+            cy.get('.figcaption > h5').should('be.hidden');
+            cy.get('.figcaption > h5').contains('name: user1');
+
+            cy.get(':nth-child(4) > img').should('exist');
+            cy.get(':nth-child(4) > img').trigger('mouseover');
+            cy.get('.figcaption > h5').should('be.hidden');
+            cy.get('.figcaption > h5').contains('name: user2');
+
+            cy.get(':nth-child(5) > img').should('exist');
+            cy.get(':nth-child(5) > img').trigger('mouseover');
+            cy.get('.figcaption > h5').should('be.hidden');
+            cy.get('.figcaption > h5').contains('name: user3');
+        });
+
+        it('TC064 - Mouse over and view the hidden contents', () => {
+            cy.get(':nth-child(3) > img').should('exist');
+            cy.get(':nth-child(3) > img').trigger('mouseover');
+            cy.get('div > .figcaption').first().should('be.hidden').invoke('show');
+            cy.get('.figcaption > h5').first().should('be.visible');
+
+            cy.get(':nth-child(4) > img').should('exist');
+            cy.get(':nth-child(4) > img').trigger('mouseover');
+            cy.get('div > .figcaption').eq(1).should('be.hidden').invoke('show');
+            cy.get('.figcaption > h5').eq(1).should('be.visible');
+
+            cy.get(':nth-child(4) > img').should('exist');
+            cy.get(':nth-child(4) > img').trigger('mouseover');
+            cy.get('div > .figcaption').last().should('be.hidden').invoke('show');
+            cy.get('.figcaption > h5').last().should('be.visible');
+        });
+
+
+        it('TC065 -  Do mouse over on all 3 image and visit the link and come back', () => {
+            cy.get('.example > p').should('exist');
+
+            cy.get(':nth-child(3) > img').should('exist');
+            cy.get('[href="/users/1"]').invoke('show').click({force: true});
+            cy.url().should('contain', 'http://the-internet.herokuapp.com/users/1');
+            cy.go('back');
+
+            cy.get(':nth-child(4) > img').should('exist');
+            cy.get('[href="/users/2"]').invoke('show').click({force: true});
+            cy.url().should('contain', 'http://the-internet.herokuapp.com/users/2');
+            cy.go('back');
+
+            cy.get(':nth-child(5) > img').should('exist');
+            cy.get('[href="/users/3"]').invoke('show').click({force: true});
+            cy.url().should('contain', 'http://the-internet.herokuapp.com/users/3');
+            cy.go('back');
         });
     });
 
