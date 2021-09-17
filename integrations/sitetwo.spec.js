@@ -73,10 +73,9 @@ describe('Test Cases on a test website', () => {
         });
         cy.contains('A/B Testing').click();
         cy.contains('A/B Test Variation 1').should('be.visible');
-        });
+    });
 
     context('Page 2 - Add/Remove Elements page testing', () => {
-
         beforeEach(() => {
         cy.contains('Add/Remove Elements').click();
         cy.get('.example').should('exist');
@@ -113,7 +112,6 @@ describe('Test Cases on a test website', () => {
     });
 
     context('Page 3 - Auth page testing', () => {
-
         it('TC006 - Login with username and password into a protected page', () => {
             cy.visit("http://the-internet.herokuapp.com/basic_auth", {
                 auth: {
@@ -132,8 +130,8 @@ describe('Test Cases on a test website', () => {
                 }});
             cy.get('p').should('not.exist');
             cy.contains('Not authorized').should('be.visible');
-            });
         });
+    });
 
     context('Page 4 - Broken image page testing', () => {
         beforeEach(() => {
@@ -264,7 +262,6 @@ describe('Test Cases on a test website', () => {
             });
         });
     });
-
 
     context('Page 9 - Disappearing Elements page check', () => {
         beforeEach(() => {
@@ -522,7 +519,6 @@ describe('Test Cases on a test website', () => {
         });
     });
 
-
     context('Page 16 - Exit Intent page check', () => {
         beforeEach(() => {
             cy.contains('Exit Intent').click();
@@ -545,8 +541,6 @@ describe('Test Cases on a test website', () => {
             cy.get(".modal").should('not.be.visible');
         });
     });
-
-
 
     context('Page 17 - File Downloads page check', () => {
         beforeEach(() => {
@@ -779,7 +773,6 @@ describe('Test Cases on a test website', () => {
             cy.get('.error').should('not.exist');
         });
     });
-
 
     context('Page 22 - Frames page check', () => {
         beforeEach(() => {
