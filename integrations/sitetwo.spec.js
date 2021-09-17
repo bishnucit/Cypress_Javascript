@@ -3,8 +3,6 @@
 /// <reference types = "cypress-iframe"/>
 
 
-import 'cypress-iframe'
-
 const testURL = 'http://the-internet.herokuapp.com/';
 describe('Test Cases on a test website', () => {
 
