@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 /// <reference types="cypress-downloadfile"/>
 
-
 const testURL = 'http://the-internet.herokuapp.com/';
 describe('Test Cases on a test website', () => {
 
@@ -72,9 +71,10 @@ describe('Test Cases on a test website', () => {
         });
         cy.contains('A/B Testing').click();
         cy.contains('A/B Test Variation 1').should('be.visible');
-    });
+        });
 
     context('Page 2 - Add/Remove Elements page testing', () => {
+
         beforeEach(() => {
         cy.contains('Add/Remove Elements').click();
         cy.get('.example').should('exist');
@@ -111,6 +111,7 @@ describe('Test Cases on a test website', () => {
     });
 
     context('Page 3 - Auth page testing', () => {
+
         it('TC006 - Login with username and password into a protected page', () => {
             cy.visit("http://the-internet.herokuapp.com/basic_auth", {
                 auth: {
@@ -129,8 +130,8 @@ describe('Test Cases on a test website', () => {
                 }});
             cy.get('p').should('not.exist');
             cy.contains('Not authorized').should('be.visible');
+            });
         });
-    });
 
     context('Page 4 - Broken image page testing', () => {
         beforeEach(() => {
@@ -261,6 +262,7 @@ describe('Test Cases on a test website', () => {
             });
         });
     });
+
 
     context('Page 9 - Disappearing Elements page check', () => {
         beforeEach(() => {
@@ -518,6 +520,7 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+
     context('Page 16 - Exit Intent page check', () => {
         beforeEach(() => {
             cy.contains('Exit Intent').click();
@@ -540,6 +543,8 @@ describe('Test Cases on a test website', () => {
             cy.get(".modal").should('not.be.visible');
         });
     });
+
+
 
     context('Page 17 - File Downloads page check', () => {
         beforeEach(() => {
@@ -773,6 +778,7 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+
     context('Page 22 - Frames page check', () => {
         beforeEach(() => {
             //cy.viewport('iphone-6');
@@ -1003,6 +1009,32 @@ describe('Test Cases on a test website', () => {
             cy.get('[href="/users/3"]').invoke('show').click({force: true});
             cy.url().should('contain', 'http://the-internet.herokuapp.com/users/3');
             cy.go('back');
+        });
+    });
+
+
+    context('Page 25 - Infinite Scroll page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Infinite Scroll').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+        it('TC066 - Verify all elements are visible', () => {
+            cy.get('h3').should('be.visible');
+            cy.get('.row').should('be.visible');
+        })
+
+        it('TC067- Scroll to bottom of the page 10 times and scroll to top at the end', () => {+
+            cy.get('.example').contains('Infinite Scroll');
+            cy.get('.example > h3').should('exist');
+            for(let i=0; i<10; i++){
+                cy.scrollTo('bottom', {duration: 2000});
+                cy.wait(500);
+            }
+            cy.scrollTo('top');
+            cy.wait(2000);
         });
     });
 
