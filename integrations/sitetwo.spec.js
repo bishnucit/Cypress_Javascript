@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 /// <reference types="cypress-downloadfile"/>
-/// <reference types = "cypress-iframe"/>
 
 
 const testURL = 'http://the-internet.herokuapp.com/';
