@@ -1038,4 +1038,40 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+    context('Page 26 - Inputs page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Inputs').click();
+            cy.get('.large-6').should('exist');
+            cy.get('.large-6 > h3').should('exist');
+            });
+
+        it('TC068 - Verify all elements are visible', () => {
+            cy.get('h3').should('be.visible');
+            cy.get('.row').should('be.visible');
+            cy.get('p').should('be.visible');
+            cy.get('input').should('be.visible');
+        })
+
+        it('TC069- Enter a number in the textbox', () => {
+            cy.get('p').should('be.visible');
+            cy.get('input').should('be.visible');
+            cy.get('input[type="number"]').clear().type('6').trigger('change');
+        });
+
+        it('TC070- Enter a number and increment/decrement using uparrow and downarrow and check the value', () => {
+            cy.get('p').should('be.visible');
+            cy.get('input').should('be.visible');
+            cy.get('input[type="number"]').clear().type('6').trigger('change');
+            for(let i=0; i<6; i++){
+                cy.get('input').type('{uparrow}');
+            }
+            cy.wait(2000);
+            for(let i=0; i<6; i++){
+                cy.get('input').type('{downarrow}');
+            }
+            cy.get('input[type="number"]').invoke('val').then(sometext => assert.equal(sometext, '6'));
+        });
+    });
+
 });
