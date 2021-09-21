@@ -151,6 +151,8 @@ describe('Test Cases on a test website', () => {
             cy.get('.example').find('>img').should('have.text', '');
             cy.screenshot('broken_image_verification');
             //cypress is not made for this type of checking so best option is to take screenshots for manual verification.
+
+            //cy.get('img').invoke('attr', 'src').should('include', 'myLogo')
         });
     });
 
@@ -1071,6 +1073,41 @@ describe('Test Cases on a test website', () => {
                 cy.get('input').type('{downarrow}');
             }
             cy.get('input[type="number"]').invoke('val').then(sometext => assert.equal(sometext, '6'));
+        });
+    });
+
+    context('Page 27 - Jquery menu page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('JQuery UI Menus').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist').should('have.text', 'JQueryUI - Menu');
+            });
+
+        it('TC071 - Verify all elements are visible', () => {
+            cy.get('.example > h3').should('exist');
+            cy.get('.description').should('exist');
+            cy.get('.description > :nth-child(1)').should('exist');
+            cy.get('.description > :nth-child(2)').should('exist');
+            cy.get('#ui-id-1').should('exist');
+            cy.get('#ui-id-2').should('exist');
+        })
+
+        it('TC072- Verify disabled element', () => {
+            cy.get('#ui-id-1').should('not.be.hidden');
+            cy.get('#ui-id-1').should('have.attr','aria-haspopup','true');
+        });
+
+        it('TC073- Verify UI menu navigation', () => {
+            cy.get('#ui-id-2').should('exist');
+            cy.get('#ui-id-2').click();
+            cy.get('#ui-id-4').click();
+            cy.get('#ui-id-5').click();
+            cy.wait(1000);
+            cy.get('li > a').should('exist').click();
+            cy.get('#ui-id-6').focus();
+            cy.get('#ui-id-7').focus();
+            cy.get('#ui-id-8').focus();
         });
     });
 
