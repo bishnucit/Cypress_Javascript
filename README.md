@@ -1,4 +1,5 @@
-# CYPRESS - JAVASCRIPT - AUTOMATION
+# CYPRESS - JAVASCRIPT - AUTOMATION - Consists all possible kinds of code that can be used in cypress automation
+testing.
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 npm install cypress-file-upload
