@@ -1111,4 +1111,69 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+    context('Page 28 - JavaScript Alerts page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('JavaScript Alerts').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist').should('have.text', 'JavaScript Alerts');
+            });
+
+        it('TC074 - Verify all elements are visible', () => {
+            cy.get('h3').should('exist');
+            cy.get('.example > :nth-child(2)').should('exist');
+            cy.get(':nth-child(1) > button').should('exist');
+            cy.get(':nth-child(2) > button').should('exist');
+            cy.get(':nth-child(3) > button').should('exist');
+            cy.get(':nth-child(1) > button').should('exist');
+        })
+
+        it('TC075- Verify Js alert interaction', () => {
+            cy.get('#result').should('exist').should('not.have.text', 'You successfully clicked an alert');
+            cy.get(':nth-child(1) > button').should('exist');
+            cy.get(':nth-child(1) > button').click();
+            cy.on('window:alert', (text) => {
+                expect(text).to.contains('I am a JS Alert');
+            });
+            cy.get('#result').should('exist').should('have.text', 'You successfully clicked an alert');
+        });
+
+        it('TC076- Verify Js confirm interaction - accept', () => {
+            cy.get(':nth-child(2) > button').should('exist');
+            cy.get(':nth-child(2) > button').click();
+            cy.on('window:alert', (text) => {
+                expect(text).to.contains('I am a JS Confirm');
+            });
+            cy.get('#result').should('exist').should('have.text', 'You clicked: Ok');
+        });
+
+        it('TC077- Verify Js confirm interaction - decline', () => {
+            cy.get(':nth-child(2) > button').should('exist');
+            cy.get(':nth-child(2) > button').click();
+            cy.on('window:confirm', (text) => {
+                expect(text).to.contains('I am a JS Confirm');
+                return false;
+            });
+            cy.get('#result').should('exist').should('have.text', 'You clicked: Cancel');
+        });
+
+        it('TC078- Verify Js prompt interaction cancel', () => {
+            cy.get(':nth-child(3) > button').should('exist');
+            cy.window().then(win => {
+                cy.stub(win, 'prompt').callsFake(() => null);
+                cy.get(':nth-child(3) > button').click();
+            });
+            cy.get('#result').should('exist').should('have.text', 'You entered: null');
+        });
+
+        it('TC078- Verify Js prompt interaction with input', () => {
+            cy.get(':nth-child(3) > button').should('exist');
+            cy.window().then(win => {
+                cy.stub(win, 'prompt').returns('This is my answer.');
+                cy.get(':nth-child(3) > button').click();
+            });
+            cy.get('#result').should('exist').should('have.text', 'You entered: This is my answer.');
+        });
+    });
+
 });
