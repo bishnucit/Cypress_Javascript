@@ -1176,4 +1176,24 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+    context('Page 29 - JavaScript Error page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('JavaScript onload event error').click();
+            cy.get('p').should('exist');
+            });
+
+        it('TC079 - Verify all elements are visible', () => {
+            cy.get('p').should('exist');
+            cy.get('p').should('have.text', '\n      This page has a JavaScript error in the onload event.\n      This is often a problem to using normal Javascript injection\n      techniques.\n    ');
+        })
+
+        it('TC080- Log at console if error in console is thrown', () => {
+            cy.intercept("/200?**").as("fake");
+            cy.visit('http://the-internet.herokuapp.com/javascript_error')
+            cy.wait("@fake");
+            cy.log('something went wrong')
+        });
+    });
+
 });
