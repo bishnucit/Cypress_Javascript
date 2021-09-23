@@ -1,6 +1,8 @@
 # CYPRESS - JAVASCRIPT - AUTOMATION - Consists all possible kinds of code that can be used in cypress automation testing.
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
+npm install cypress-fail-on-console-error 
+--------------------------------------------------------------------------------------------------------------
 npm install cypress-file-upload
 --------------------------------------------------------------------------------------------------------------
 npm install cypress-downloadfile (install global level)
