@@ -1225,4 +1225,32 @@ describe('Test Cases on a test website', () => {
         });
     });
 
+    context('Page 32 - Multiple window page check', () => {
+        beforeEach(() => {
+            //cy.viewport('iphone-6');
+            cy.contains('Multiple Windows').click();
+            cy.get('.example').should('exist');
+            cy.get('.example > h3').should('exist');
+            });
+
+        it('TC083 - Verify all elements are visible', () => {
+            cy.get('h3').should('have.text', 'Opening a new window');
+            cy.get('a').should('be.visible');
+            cy.get('.example > a').should('have.attr', 'target', '_blank');
+        });
+
+        it('TC084 - verify the link is valid without visiting the link and then visiting the link', () => {
+            cy.get('a').then(link => {
+                cy.request(link.prop('href')).its('status').should('eq', 200);
+            });
+            cy.get('.example > a').click();
+        });
+
+        it('TC085- Removing attribute to open in same window and then go back to old window', () => {
+            cy.get('.example > a').invoke('removeAttr', 'target').click();
+            cy.get('h3').should('have.text', 'New Window');
+            cy.go('back');
+        });
+    });
+
 });
