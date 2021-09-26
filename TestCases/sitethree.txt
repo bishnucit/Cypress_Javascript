@@ -1,0 +1,18 @@
+SUT - http://automationpractice.com/
+
+TC001 - Home page (/index.php) - Verify all elements of home page
+TC002 - Contact page (/index.php?controller=contact) - Verify all elements of contact page
+TC003 - My account page (/index.php?controller=authentication&back=my-account) - Verify all elements of my account page
+TC004 - Category display page (/index.php?id_category=3&controller=category) - Verify all elements of category display page
+TC005 - Product page (/index.php?id_product=1&controller=product) - Verify all elements of product page
+TC006 - Order page (/index.php?controller=order) - Verify all elements of order page
+TC006/01 - Summary page - Verify all elements of Summary page
+TC006/02 - Sign in page - Verify all elements of sign in page
+TC006/03 - Address page - Verify all elements of address page
+TC006/04 - Shipping page - Verify all elements of shipping page
+TC006/05 - Payment page - Verify all elements of payment page
+TC007 - Order history page (/index.php?controller=history) - Verify all elements of orders history page
+TC008 - Order slip page (/index.php?controller=order-slip) - Verify all elements of order slip page
+TC009 - My addresses page (http://automationpractice.com/index.php?controller=addresses) - Verify all elements of my addresses page
+TC010 - Identity page (/index.php?controller=identity) - Verify all elements of identity page
+TC011 - Wishlist page (/index.php?fc=module&module=blockwishlist&controller=mywishlist) - Verify all elements of wishlist page
