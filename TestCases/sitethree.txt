@@ -7,7 +7,7 @@ TC004 - Category display page (/index.php?id_category=3&controller=category) - V
 TC005 - Product page (/index.php?id_product=1&controller=product) - Verify all elements of product page
 TC006 - Order page (/index.php?controller=order) - Verify all elements of order page
 TC006/01 - Summary page - Verify all elements of Summary page
-TC006/02 - Sign in page - Verify all elements of sign in page
+TC006/02 - Sign in page - Verify all elements of sign in page (https://prnt.sc/1tnyykw)
 TC006/03 - Address page - Verify all elements of address page
 TC006/04 - Shipping page - Verify all elements of shipping page
 TC006/05 - Payment page - Verify all elements of payment page
@@ -16,3 +16,12 @@ TC008 - Order slip page (/index.php?controller=order-slip) - Verify all elements
 TC009 - My addresses page (http://automationpractice.com/index.php?controller=addresses) - Verify all elements of my addresses page
 TC010 - Identity page (/index.php?controller=identity) - Verify all elements of identity page
 TC011 - Wishlist page (/index.php?fc=module&module=blockwishlist&controller=mywishlist) - Verify all elements of wishlist page
+TC012 - Search Result page (/index.php?controller=search&orderby=position&orderway=desc&search_query=Shirt&submit_search=) - Verify all elements of result page
+TC013 - Price drop page (/index.php?controller=prices-drop) - Verify all elements of price drop page
+TC014 - New products page (/index.php?controller=new-products) - Verify all elements of new products page
+TC015 - Best sales page (/index.php?controller=best-sales) - Verify all elements of best sales page
+TC016 - Stores page (http://automationpractice.com/index.php?controller=stores) - Verify all elements of stores page
+TC017 - Terms page (http://automationpractice.com/index.php?id_cms=3&controller=cms) - Verify all elements of terms page
+TCO18 - About page (http://automationpractice.com/index.php?id_cms=4&controller=cms) - Verify all elements of about page
+TC019 - Sitemap page (http://automationpractice.com/index.php?controller=sitemap) - Verify all elements of sitemap page
+
