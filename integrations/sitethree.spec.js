@@ -17,14 +17,14 @@ const HEADER_UNSIGNED_VALIDATION = () => {
     cy.get('.shop-phone > strong').should('have.text', '0123-456-789').should('exist');
     //Contact us component
     cy.get('#contact-link > a').should('have.text', 'Contact us').should('exist');
-    cy.get('#contact-link > a').then(link => {
+    /* cy.get('#contact-link > a').then(link => {
             cy.request(link.prop('href')).its('status').should('be.oneOf', [200,304,508]);
-    });
+    }); */
     //Sign in component
     cy.get('.login').should('exist');
-    cy.get('.login').then(link => {
+    /* cy.get('.login').then(link => {
             cy.request(link.prop('href')).its('status').should('be.oneOf', [200,304,508]);
-    });
+    }); */
     //Header components
     cy.get('.logo').should('be.visible');
     cy.get('#search_query_top').should('exist');
