@@ -1,0 +1,15 @@
+Download the app from https://github.com/cypress-io/cypress-realworld-app
+
+SUT - http://localhost:3000
+
+Scenario 1 - Verify all elements exists on the application
+
+TC001 - Sign in page (/signin) - Verify all elements of sign in page
+TC002 - Sign up page (/signup)- Verify all elements of sign up page
+TC003 - Home page - Verify all elements of home page
+TC004 - Contacts page (/contacts) - Verify all elements of contacts page
+TC005 - Personal page (/personal) - Verify all elements of personal page
+TC006 - New Transaction page (/transaction/new) - Verify all elements of Transaction new page
+TC007 - Notifications page (/notifications) - Verify all elements of notifications page
+TC008 - My accounts page (/user/settings) - Verify all elements of My accounts page
+TC009 - Bank Accounts page (/bankaccounts) - Verify all elements of Bank accounts page
