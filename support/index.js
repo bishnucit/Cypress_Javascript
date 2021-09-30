@@ -16,18 +16,18 @@
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 import './commands'
-import failOnConsoleError, { consoleType } from "cypress-fail-on-console-error"
+//import failOnConsoleError, { consoleType } from "cypress-fail-on-console-error"
 
-Cypress.on('uncaught:exception', (err, runnable) => {
+/* Cypress.on('uncaught:exception', (err, runnable) => {
   return false
 });
 
 const config = {
     excludeMessages: ['firstError', 'secondError'],
     includeConsoleTypes: [consoleType.ERROR, consoleType.WARN],
-};
+}; */
 
-failOnConsoleError(config);
+/* failOnConsoleError(config);
 
 Cypress.on("window:before:load", win => {
   cy.stub(win.console, "error").callsFake(msg => {
@@ -40,4 +40,4 @@ Cypress.on("window:before:load", win => {
     // log to Command Log and fail the test
     throw new Error(msg);
   });
-});
+}); */
