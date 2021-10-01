@@ -25,7 +25,7 @@ Scenario 5 - Edit name, phone number, email in user settings and make 10 transac
 
 Scenario 6 - Create a new user, logout, login with old user and Make a new transaction (Request money) from Home page. Login as new user and accept request from old user in Personal page. Check the balance of the new and old user, should be updated.
 
-Scenario 7 - Create a new user, logout, login with old user and Make a new transaction (Pay money) from Home page with a newly created user. Login as new user and then accept the payment from old user in personal page. Check the balance of the new and old user, should be updated.
+Scenario 7 - Create a new user, logout, login with old user and Make a new transaction (Pay money) from Home page with a newly created user. Login as new user and then check the balance of the new and old user, should be updated.
 
 Scenario 8 - Make 2 transactions with any user and then verify the transaction from personal page.
 
