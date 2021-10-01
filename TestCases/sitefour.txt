@@ -21,7 +21,7 @@ Scenario 3 - View transaction from $200 t0 $1000 range on Home page
 
 Scenario 4 - Create a new bank account after login and delete the account
 
-Scenario 5 - Edit name, phone number, email in user settings
+Scenario 5 - Edit name, phone number, email in user settings and make 10 transactions with 10 friends.
 
 Scenario 6 - Create a new user, logout, login with another user and Make a new transaction (Request money) from Home page with a newly created user.
 
