@@ -29,6 +29,6 @@ Scenario 7 - Create a new user, logout, login with another user and Make a new t
 
 Scenario 8 - Make 2 transactions with any user and then verify the transaction from personal page.
 
-Scenario 9 - Like and comment on personal transactions and verify received notification on notification symbol and notification page
+Scenario 9 - Like and comment on personal transactions and verify received notification on notification symbol and notification page. Dismiss the notification.
 
 Scenario 10 - Register a new user and like and comment on the existing user, login with existing user and verify notification of new user like and coment is received.
