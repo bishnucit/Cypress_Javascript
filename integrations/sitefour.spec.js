@@ -54,7 +54,7 @@ describe('Verify all the elements of the websites are existing', () => {
         cy.visit(testURL,{failOnStatusCode: false});
     });
 
-    it.skip('TC001 - Sign in page - Verify elements of sign in page', () => {
+    it('TC001 - Sign in page - Verify elements of sign in page', () => {
         //verify elements
         cy.get('.makeStyles-logo-3').should('exist');
         cy.get('.MuiTypography-h5').should('exist');
@@ -70,7 +70,7 @@ describe('Verify all the elements of the websites are existing', () => {
     });
 
 
-    it.skip('TC002 - Sign up page - Verify elements of sign up page', () => {
+    it('TC002 - Sign up page - Verify elements of sign up page', () => {
         cy.get('[data-test=signup]').click();
         //verify elements
         cy.get('#firstName').should('exist');
@@ -108,7 +108,7 @@ describe('Verify all the elements of the websites are existing', () => {
         LOGOUT();
     });
 
-    it.skip('TC003 - Home page - Verify elements of Home page', () => {
+    it('TC003 - Home page - Verify elements of Home page', () => {
         //login
         LOGIN();
         BODY();
@@ -116,7 +116,7 @@ describe('Verify all the elements of the websites are existing', () => {
         LOGOUT();
     });
 
-    it.skip('TC004 - Contacts page - Verify elements of Contacts page', () => {
+    it('TC004 - Contacts page - Verify elements of Contacts page', () => {
         //login
         LOGIN();
         //verify static elements of body
@@ -162,7 +162,58 @@ describe('Verify all the elements of the websites are existing', () => {
         cy.get('[data-test=user-list-item-24VniajY1y]').should('be.visible');
         cy.get('[data-test=user-list-item-tsHF6_D5oQ]').should('be.visible');
         //logout
-        LOGOUT();       
+        LOGOUT();
     });
+
+    it('TC007 - Notifications page - Verify elements of Notification page', () => {
+
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-notifications]').click();
+        cy.get('.MuiGrid-grid-xs-12 > .MuiPaper-root > :nth-child(1)').should('have.text', 'Notifications');
+        cy.get('[data-test=empty-list-header]').should('have.text', 'No Notifications');
+        cy.get('[data-test=empty-list-children] > svg').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC008 - My Accounts page - Verify elements of My Accounts page', () => {
+
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-user-settings]').click();
+        cy.get('.MuiPaper-root > .MuiTypography-root').should('have.text', 'User Settings');
+        cy.get('.MuiPaper-root > .MuiTypography-root').should('be.visible');
+        cy.get('[data-test=user-settings-firstName-input]').should('exist');
+        cy.get('[data-test=user-settings-lastName-input]').should('exist');
+        cy.get('[data-test=user-settings-email-input]').should('exist');
+        cy.get('[data-test=user-settings-phoneNumber-input]').should('exist');
+        //three types of getting value from element
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-firstName-input]').value;
+            expect(value).to.equal('tester');
+        });
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-lastName-input]').value;
+            expect(value).to.equal('tester');
+        });
+
+        cy.get('[data-test=user-settings-email-input]').should(($input) => {
+            const value = $input.val();
+            expect(value).to.equal('');
+        });
+
+        cy.get('[data-test=user-settings-phoneNumber-input]').invoke('val').should((value) => {
+            expect(value).to.equal('');
+        });
+
+        //logout
+        LOGOUT();
+    });
+
 
 });
