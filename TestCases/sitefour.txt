@@ -17,6 +17,10 @@ TC009 - Bank Accounts page (/bankaccounts) - Verify all elements of Bank account
 
 Scenario 2 - View first two transactions on Home page and comment and like on the transaction (comment nice if +transaction else comment sad)
 
+TC001 - Verify two comments are existing
+TC002 - Comment and like first comment
+TC003 - Comment and like second comment
+
 Scenario 3 - View transaction from $200 t0 $1000 range on Home page 
 
 Scenario 4 - Create a new bank account after login and delete the account
