@@ -210,10 +210,73 @@ describe('Verify all the elements of the websites are existing', () => {
         cy.get('[data-test=user-settings-phoneNumber-input]').invoke('val').should((value) => {
             expect(value).to.equal('');
         });
-
         //logout
         LOGOUT();
     });
 
+    it('TC009 - Bank Accounts page - Verify elements of Bank Accounts page', () => {
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-bankaccounts]').click();
+        cy.get('.MuiGrid-grid-xs-12 > .MuiPaper-root > .MuiGrid-align-items-xs-center > :nth-child(1) > .MuiTypography-root').should('exist');
+        cy.get('[data-test=bankaccount-new]').should('exist');
+        cy.get('[data-test=bankaccount-delete]').should('exist');
+        cy.get('[data-test=bankaccount-list-item-BkBGW8EXt] > .MuiGrid-container > :nth-child(1)').should('exist');
+        //logout
+        LOGOUT();
+    });
+});
+
+describe('View first two transactions on Home page and comment and like on the transaction', () => {
+
+    beforeEach(() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+    });
+
+    it('TC001 - Verify two comments are existing', () => {
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-home]').click();
+        cy.get('[data-test=transaction-item-4AvM8cN1DdS]').should('be.visible');
+        cy.get('[data-test=transaction-item-Ke0eaLoOG8Dg]').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC002 - Comment and like first comment', () => {
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-home]').click();
+        cy.get('[data-test=transaction-sender-4AvM8cN1DdS]').click({force: true});
+        //like
+        cy.get('[data-test=transaction-like-button-4AvM8cN1DdS]').click({force: true});
+        //comment
+        //cy.scrollTo('top');
+        cy.get('[data-test=transaction-comment-input-4AvM8cN1DdS]').type('hello').type('{enter}');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC003 - Comment and like second comment', () => {
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-home]').click();
+        cy.get('[data-test=transaction-sender-mEYl_ZSc5Qqe]').click({force: true});
+        //like
+        cy.get('[data-test=transaction-like-button-mEYl_ZSc5Qqe]').click({force: true});
+        //comment
+        //cy.scrollTo('top');
+        cy.get('[data-test=transaction-comment-input-mEYl_ZSc5Qqe]').type('hello').type('{enter}');
+        //logout
+        LOGOUT();
+    });
 
 });
