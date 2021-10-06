@@ -48,7 +48,7 @@ const BODY = () => {
     cy.get('[data-test=transaction-list-filter-amount-range-button]').should('exist');
 };
 
-describe('Verify all the elements of the websites are existing', () => {
+describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
 
     beforeEach(() => {
         cy.visit(testURL,{failOnStatusCode: false});
@@ -223,13 +223,12 @@ describe('Verify all the elements of the websites are existing', () => {
         cy.get('.MuiGrid-grid-xs-12 > .MuiPaper-root > .MuiGrid-align-items-xs-center > :nth-child(1) > .MuiTypography-root').should('exist');
         cy.get('[data-test=bankaccount-new]').should('exist');
         cy.get('[data-test=bankaccount-delete]').should('exist');
-        cy.get('[data-test=bankaccount-list-item-BkBGW8EXt] > .MuiGrid-container > :nth-child(1)').should('exist');
         //logout
         LOGOUT();
     });
 });
 
-describe('View first two transactions on Home page and comment and like on the transaction', () => {
+describe('Scenario 2 - View first two transactions on Home page and comment and like on the transaction', () => {
 
     beforeEach(() => {
         cy.visit(testURL,{failOnStatusCode: false});
@@ -278,5 +277,31 @@ describe('View first two transactions on Home page and comment and like on the t
         //logout
         LOGOUT();
     });
+
+});
+
+
+describe('Scenario 3 - View transaction from $0 t0 $500 range on Home page', () => {
+
+    beforeEach(() => {
+        cy.viewport(1536,960)
+        cy.visit(testURL,{failOnStatusCode: false});
+    });
+
+    it('TC001 - Select $0 to $500 transaction in slider', () => {
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+        cy.get('[data-test=sidenav-home]').click();
+        cy.get('[data-test=transaction-list-filter-amount-range-button]').click({force: true});
+        cy.get('[data-test=transaction-list-filter-amount-range-slider]').invoke('val', '1').trigger('change').click();
+        cy.get('[data-test=transaction-sender-4AvM8cN1DdS]').click({force: true});
+        cy.get('[data-test=transaction-detail-header]').should('have.text', 'Transaction Detail');
+        cy.get('[data-test=transaction-amount-4AvM8cN1DdS]').should('have.text', '-$190.85');
+        //logout
+        LOGOUT();
+    });
+
 
 });
