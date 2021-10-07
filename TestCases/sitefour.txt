@@ -24,6 +24,9 @@ TC003 - Comment and like second comment
 
 Scenario 3 - View transaction from $200 t0 $1000 range on Home page 
 
+TC001 - Select $0 to $500 transaction in slider
+
+
 Scenario 4 - Create a new bank account after login and delete the account
 
 Scenario 5 - Edit name, phone number, email in user settings and make 10 transactions with 10 friends.
