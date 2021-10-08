@@ -27,7 +27,7 @@
 require('cypress-downloadfile/lib/downloadFileCommand');
 
 import 'cypress-file-upload';
-import 'cypress-iframe'
+
 
 Cypress.Commands.add('waitForLoader', () => {
     cy.get('#loading', { timeout: 5000 }).should('have.length', 1)
@@ -44,4 +44,26 @@ Cypress.Commands.add('getIframe', (iframe) => {
         .its('0.contentDocument.body')
         .should('be.visible')
         .then(cy.wrap);
-})
+});
+
+let LOCAL_STORAGE = {};
+
+Cypress.Commands.add('saveLocalStorage', () => {
+  Object.keys(localStorage).forEach(key => {
+    LOCAL_STORAGE[key] = localStorage[key];
+  });
+});
+
+Cypress.Commands.add('restoreLocalStorage', () => {
+  Object.keys(LOCAL_STORAGE).forEach(key => {
+    localStorage.setItem(key, LOCAL_STORAGE[key]);
+  });
+});
+
+Cypress.Commands.add('login_sitefour', () => {
+  cy.visit('http://localhost:3000/signin');
+  cy.get('#username').clear().type('tester');
+  cy.get('#password').clear().type('tester');
+  cy.get('[data-test=signin-submit]').click();
+  cy.wait(2000);
+});
