@@ -57,7 +57,7 @@ const BODY = () => {
     cy.get('[data-test=transaction-list-filter-amount-range-button]').should('exist');
 };
 
-/* describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
+describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
 
     beforeEach(() => {
         cy.visit(testURL,{failOnStatusCode: false});
@@ -287,11 +287,10 @@ describe('Scenario 2 - View first two transactions on Home page and comment and 
         LOGOUT();
     });
 
-}); */
-
+});
 
 describe('Scenario 3 - View transaction from $0 t0 $500 range on Home page', () => {
-    context('Using local storage to avoid login every time for each test case',  () => {
+    context('Using local storage',  () => {
         before(() => {
             cy.login_sitefour();
             cy.saveLocalStorage();
