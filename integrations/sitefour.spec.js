@@ -13,6 +13,15 @@
 const testURL = 'http://localhost:3000';
 
 
+const ONBOARDING = () => {
+    cy.get('[data-test=user-onboarding-next]').click();
+    cy.get('#bankaccount-bankName-input').clear().type('Tester')
+    cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
+    cy.get('[data-test="bankaccount-submit"]').should('be.disabled');
+    cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
+    cy.get('[data-test="bankaccount-submit"]').click();
+    cy.get('[data-test=user-onboarding-next]').click();
+};
 
 const LOGIN = () => {
     //login to app (remember to make a user with tester tester before runing automation)
@@ -48,7 +57,7 @@ const BODY = () => {
     cy.get('[data-test=transaction-list-filter-amount-range-button]').should('exist');
 };
 
-describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
+/* describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
 
     beforeEach(() => {
         cy.visit(testURL,{failOnStatusCode: false});
@@ -278,29 +287,43 @@ describe('Scenario 2 - View first two transactions on Home page and comment and 
         LOGOUT();
     });
 
-});
+}); */
 
 
 describe('Scenario 3 - View transaction from $0 t0 $500 range on Home page', () => {
+    context('Using local storage to avoid login every time for each test case',  () => {
+        before(() => {
+            cy.login_sitefour();
+            cy.saveLocalStorage();
+        });
 
-    beforeEach(() => {
-        cy.viewport(1536,960)
-        cy.visit(testURL,{failOnStatusCode: false});
-    });
+        it('TC001 - Select $0 to $500 transaction in slider', () => {
+            //restoring local storage to avoid login every time (reduces login timing)
+            cy.restoreLocalStorage();
+            cy.visit(testURL)
+            //body check
+            BODY();
+            cy.get('[data-test=sidenav-home]').click();
+            cy.get('[data-test=transaction-list-filter-amount-range-button]').click({force: true});
+            cy.get('[data-test=transaction-list-filter-amount-range-slider]').invoke('val', '1').trigger('change').click();
+            cy.get('[data-test=transaction-sender-4AvM8cN1DdS]').click({force: true});
+            cy.get('[data-test=transaction-detail-header]').should('have.text', 'Transaction Detail');
+            cy.get('[data-test=transaction-amount-4AvM8cN1DdS]').should('have.text', '-$190.85');
+        });
 
-    it('TC001 - Select $0 to $500 transaction in slider', () => {
-        //login
-        LOGIN();
-        //verify static elements of body
-        BODY();
-        cy.get('[data-test=sidenav-home]').click();
-        cy.get('[data-test=transaction-list-filter-amount-range-button]').click({force: true});
-        cy.get('[data-test=transaction-list-filter-amount-range-slider]').invoke('val', '1').trigger('change').click();
-        cy.get('[data-test=transaction-sender-4AvM8cN1DdS]').click({force: true});
-        cy.get('[data-test=transaction-detail-header]').should('have.text', 'Transaction Detail');
-        cy.get('[data-test=transaction-amount-4AvM8cN1DdS]').should('have.text', '-$190.85');
-        //logout
-        LOGOUT();
+        it('TC002 - Select transactions for the month of september in date picker', () => {
+            cy.restoreLocalStorage();
+            cy.visit(testURL);
+            ONBOARDING();
+            //body check
+            BODY();
+            cy.get('[data-test=transaction-list-filter-date-range-button]').click({force:true});
+            cy.get('[data-date="2021-09-02"]').click();
+            cy.wait(500);
+            cy.get('[data-date="2021-09-30"]').click();
+            cy.wait(500);
+            cy.get('[data-test=empty-list-header]').should('have.text', 'No Transactions');
+        });
     });
 
 
