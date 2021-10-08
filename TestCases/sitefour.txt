@@ -25,6 +25,7 @@ TC003 - Comment and like second comment
 Scenario 3 - View transaction from $200 t0 $1000 range on Home page 
 
 TC001 - Select $0 to $500 transaction in slider
+TC002 - Select transactions for the month of september in date picker
 
 
 Scenario 4 - Create a new bank account after login and delete the account
