@@ -347,12 +347,12 @@ describe('Scenario 4 - Create a new bank account after login and delete the acco
             cy.get('[data-test=bankaccount-new]').click({force:true});
             cy.contains('Create Bank Account').should('be.visible');
             cy.contains('Create Bank Account').click({force:true});
-
+            //create account
             cy.get('#bankaccount-bankName-input').clear().type('test123456');
             cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
             cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
             cy.get('[data-test=bankaccount-submit]').click({force:true});
-
+            //delete account
             cy.contains('test123456').should('be.visible');
             cy.wait(3000);
             cy.get('.MuiButton-label').last().click({force:true});
