@@ -58,6 +58,37 @@ const BODY = () => {
     cy.get('[data-test=transaction-list-filter-amount-range-button]').should('exist');
 };
 
+describe('Setting of test setup', () => {
+    it('Setup the account for automation testing',() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+        cy.get('[data-test=signup]').click();
+        cy.get('#firstName').clear().type('tester');
+        cy.get('#lastName').clear().type('tester');
+        cy.get('#username').clear().type('tester');
+        cy.get('#password').clear().type('tester');
+        cy.get('#confirmPassword').clear().type('tester');
+        //onboarding login
+        cy.get('[data-test=signup-submit]').click();
+        cy.get('#username').clear().type('tester');
+        cy.get('#password').clear().type('tester');
+        cy.get('[data-test=signin-submit]').click();
+        cy.get('[data-test=sidenav-username]').should('be.visible');
+        cy.get('[data-test=user-onboarding-dialog-title] > .MuiTypography-root').should('be.visible');
+        cy.get('[data-test=user-onboarding-next]').click();
+        cy.get('[data-test=user-onboarding-dialog-title]').should('be.visible');
+        cy.get('#bankaccount-bankName-input').clear().type('Tester')
+        cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
+        cy.get('[data-test="bankaccount-submit"]').should('be.disabled');
+        cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
+        cy.get('[data-test="bankaccount-submit"]').click();
+        cy.get('.MuiBox-root > .MuiTypography-root').should('be.visible');
+        cy.get('[data-test=user-onboarding-next] > .MuiButton-label').click();
+        cy.get('[data-test=sidenav-username]').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+});
+
 describe('Scenario 1 - Verify all the elements of the websites are existing', () => {
 
     beforeEach(() => {
