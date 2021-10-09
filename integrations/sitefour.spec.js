@@ -5,6 +5,7 @@
 // check out the link below and learn how to write your first test:
 // https://on.cypress.io/writing-first-test
 
+
 //Download the app from https://github.com/cypress-io/cypress-realworld-app
 
 /// <reference types="cypress"/>
@@ -322,8 +323,42 @@ describe('Scenario 3 - View transaction from $0 t0 $500 range on Home page', () 
             cy.get('[data-date="2021-09-30"]').click();
             cy.wait(500);
             cy.get('[data-test=empty-list-header]').should('have.text', 'No Transactions');
+            //logout
+            LOGOUT();
         });
     });
+});
 
+describe('Scenario 4 - Create a new bank account after login and delete the account', () => {
+    context('Using local storage',  () => {
+        before(() => {
+            cy.login_sitefour();
+            cy.saveLocalStorage();
+        });
 
+        it('TC001 - Create a new bank account after login and delete after creating immediately', () => {
+            //restoring local storage to avoid login every time (reduces login timing)
+            cy.restoreLocalStorage();
+            cy.visit(testURL)
+            //body check
+            BODY();
+            cy.get('[data-test=sidenav-bankaccounts]').click({force:true});
+            cy.get('[data-test=bankaccount-new]').should('be.visible');
+            cy.get('[data-test=bankaccount-new]').click({force:true});
+            cy.contains('Create Bank Account').should('be.visible');
+            cy.contains('Create Bank Account').click({force:true});
+
+            cy.get('#bankaccount-bankName-input').clear().type('test123456');
+            cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
+            cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
+            cy.get('[data-test=bankaccount-submit]').click({force:true});
+
+            cy.contains('test123456').should('be.visible');
+            cy.wait(3000);
+            cy.get('.MuiButton-label').last().click({force:true});
+            cy.contains('test123456 (Deleted)').should('be.visible');
+            //logout
+            LOGOUT();
+        });
+    });
 });
