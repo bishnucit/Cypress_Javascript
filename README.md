@@ -1,4 +1,4 @@
-# CYPRESS - JAVASCRIPT - AUTOMATION - Consists multiples examples of code that can be used in cypress for automation testing.
+# CYPRESS - JAVASCRIPT - AUTOMATION - Consists multiple examples of code that can be used in cypress for automation testing.
 --------------------------------------------------------------------------------------------------------------
 Use the below commands to install the dependent packages - 
 --------------------------------------------------------------------------------------------------------------
