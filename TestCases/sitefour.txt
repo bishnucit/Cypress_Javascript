@@ -33,7 +33,11 @@ Scenario 4 - Create a new bank account after login and delete the account
 TC001 - Create a new bank account after login and delete after creating immediately
 
 
-Scenario 5 - Edit name, phone number, email in user settings and make 10 transactions with 10 friends.
+Scenario 5 - Edit name, phone number, email in user settings and make 5 transactions(request, pay) with 5 friends.
+
+TC001 - Navigate to My Account page and edit name, phone and email
+TC002 - Navigate to New transaction page, search 5 users and request for money
+TC003 - Navigate to New transaction page, search 5 users and pay money
 
 Scenario 6 - Create a new user, logout, login with old user and Make a new transaction (Request money) from Home page. Login as new user and accept request from old user in Personal page. Check the balance of the new and old user, should be updated.Verify notification is updated.
 
