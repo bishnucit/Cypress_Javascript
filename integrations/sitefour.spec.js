@@ -393,3 +393,181 @@ describe('Scenario 4 - Create a new bank account after login and delete the acco
         });
     });
 });
+
+describe('Scenario 5 - Edit name, phone number, email in user settings and make 5 transactions(request, pay) with 5 friends', () => {
+    beforeEach(() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+        //login
+        LOGIN();
+        //verify static elements of body
+        BODY();
+    });
+
+    it('TC001 - Navigate to My Account page and edit name, phone and email', () => {
+        //add details
+        cy.get('[data-test=sidenav-user-settings]').click({force:true});
+        cy.get('[data-test=user-settings-firstName-input]').should('exist').clear().type('tester');
+        cy.get('[data-test=user-settings-lastName-input]').should('exist').clear().type('tester');
+        cy.get('[data-test=user-settings-email-input]').should('exist').clear().type('test123_gr@mailinator.com');
+        cy.get('[data-test=user-settings-phoneNumber-input]').should('exist').clear().type('0123456789');
+        cy.get('[data-test=user-settings-submit]').should('be.enabled').click({force:true});
+        cy.wait(3000);
+        //verify details
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=sidenav-user-settings]').click({force:true});
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-firstName-input]').value;
+            expect(value).to.equal('tester');
+        });
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-lastName-input]').value;
+            expect(value).to.equal('tester');
+        });
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-email-input]').value;
+            expect(value).to.equal('test123_gr@mailinator.com');
+        });
+        cy.document().then((doc) => {
+            const value = doc.querySelector('[data-test=user-settings-phoneNumber-input]').value;
+            expect(value).to.equal('0123456789');
+        });
+        //logout
+        LOGOUT();
+    });
+
+    it('TC002 - Navigate to New transaction page, search 5 users and request for money', () => {
+        //make transactions
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        //user 1 transaction
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Edgar');
+        cy.get('[data-test=user-list-item-t45AiwidW]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 2 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Arely');
+        cy.get('[data-test=user-list-item-qywYp6hS0U]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 3 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Kaylin');
+        cy.get('[data-test=user-list-item-bDjUb4ir5O]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 4 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Ibrahim');
+        cy.get('[data-test=user-list-item-24VniajY1y]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 5 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Devon');
+        cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //verify transactions
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-personal-tab]').click({force:true});
+        cy.contains('Devon').should('exist');
+        cy.contains('Ibrahim').should('exist');
+        cy.contains('Kaylin').should('exist');
+        cy.contains('Arely').should('exist');
+        cy.contains('Edgar').should('exist');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC003 - Navigate to New transaction page, search 5 users and pay money', () => {
+        //make transactions
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        //user 1 transaction
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Edgar');
+        cy.get('[data-test=user-list-item-t45AiwidW]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 2 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Arely');
+        cy.get('[data-test=user-list-item-qywYp6hS0U]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 3 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Kaylin');
+        cy.get('[data-test=user-list-item-bDjUb4ir5O]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 4 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Ibrahim');
+        cy.get('[data-test=user-list-item-24VniajY1y]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //user 5 transaction
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('Devon');
+        cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click({force:true});
+        cy.get('[data-test=transaction-create-submit-request]').should('be.disabled');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.disabled');
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('This is a note');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        cy.get('[data-test=new-transaction-create-another-transaction]').should('be.visible');
+        //verify transactions
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-personal-tab]').click({force:true});
+        cy.contains('Devon').should('exist');
+        cy.contains('Ibrahim').should('exist');
+        cy.contains('Kaylin').should('exist');
+        cy.contains('Arely').should('exist');
+        cy.contains('Edgar').should('exist');
+        //logout
+        LOGOUT();
+    });
+});
