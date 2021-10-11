@@ -32,6 +32,15 @@ const LOGIN = () => {
     cy.get('[data-test=sidenav-username]').should('be.visible');
 };
 
+function PARAM_LOGIN(username, password)
+{
+    //login to app (remember to make a user with tester tester before runing automation)
+    cy.get('#username').clear().type(username);
+    cy.get('#password').clear().type(password);
+    cy.get('[data-test=signin-submit]').click();
+    cy.get('[data-test=sidenav-username]').should('be.visible');
+};
+
 const LOGOUT = () => {
     //logout from app
     cy.get('[data-test=sidenav-signout]').should('be.visible');
@@ -59,7 +68,7 @@ const BODY = () => {
 };
 
 describe('Setting of test setup', () => {
-    it('Setup the account for automation testing',() => {
+    it('Setup the account 1 for automation testing',() => {
         cy.visit(testURL,{failOnStatusCode: false});
         cy.get('[data-test=signup]').click();
         cy.get('#firstName').clear().type('tester');
@@ -77,6 +86,35 @@ describe('Setting of test setup', () => {
         cy.get('[data-test=user-onboarding-next]').click();
         cy.get('[data-test=user-onboarding-dialog-title]').should('be.visible');
         cy.get('#bankaccount-bankName-input').clear().type('Tester')
+        cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
+        cy.get('[data-test="bankaccount-submit"]').should('be.disabled');
+        cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
+        cy.get('[data-test="bankaccount-submit"]').click();
+        cy.get('.MuiBox-root > .MuiTypography-root').should('be.visible');
+        cy.get('[data-test=user-onboarding-next] > .MuiButton-label').click();
+        cy.get('[data-test=sidenav-username]').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+
+    it('Setup the account 2 for automation testing',() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+        cy.get('[data-test=signup]').click();
+        cy.get('#firstName').clear().type('tester1');
+        cy.get('#lastName').clear().type('tester1');
+        cy.get('#username').clear().type('tester1');
+        cy.get('#password').clear().type('tester1');
+        cy.get('#confirmPassword').clear().type('tester1');
+        //onboarding login
+        cy.get('[data-test=signup-submit]').click();
+        cy.get('#username').clear().type('tester1');
+        cy.get('#password').clear().type('tester1');
+        cy.get('[data-test=signin-submit]').click();
+        cy.get('[data-test=sidenav-username]').should('be.visible');
+        cy.get('[data-test=user-onboarding-dialog-title] > .MuiTypography-root').should('be.visible');
+        cy.get('[data-test=user-onboarding-next]').click();
+        cy.get('[data-test=user-onboarding-dialog-title]').should('be.visible');
+        cy.get('#bankaccount-bankName-input').clear().type('Tester1')
         cy.get('#bankaccount-routingNumber-input').clear().type('123456789');
         cy.get('[data-test="bankaccount-submit"]').should('be.disabled');
         cy.get('#bankaccount-accountNumber-input').clear().type('123456789');
@@ -569,5 +607,58 @@ describe('Scenario 5 - Edit name, phone number, email in user settings and make 
         cy.contains('Edgar').should('exist');
         //logout
         LOGOUT();
+    });
+});
+
+
+describe('Scenario 6 - Create a new user, logout, login with old user and Make a new transaction (Request money) from Home page. Login as new user and accept request from old user in Personal page.'
++'Check the balance of the new and old user, should be updated.Verify notification is updated.', () => {
+    beforeEach(() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+    });
+
+    it('TC001 - Login with a new user and then logout', () => {
+        //login
+        PARAM_LOGIN("tester1","tester1");
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.lessThan', 1);
+        //logout
+        LOGOUT();
+    });
+
+    it('TC002 - Login with another user and make a transaction with new user', () => {
+        //login
+        PARAM_LOGIN("tester","tester");
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.lessThan', 1);
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('tester1');
+        cy.wait(3000);
+        cy.contains('tester1').first().click({force:true});
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('Request 50 dollar');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        //logout
+        LOGOUT();
+    });
+
+   it('TC003 - Accept the request from the old user', () => {
+        //login
+        PARAM_LOGIN("tester1","tester1");
+        cy.get('[data-test=nav-personal-tab]').click({force:true});
+        cy.contains('tester tester').first().click({force:true});
+        cy.wait(2000);
+        cy.get('.MuiButton-label').eq(1).click({force:true});
+        cy.wait(2000);
+        cy.contains('charged').should('be.visible');
+        //verify notifications
+        cy.get('[data-test=nav-top-notifications-link]').click({force:true});
+        cy.get('[data-test=notifications-list]').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC004 - Verify the old user account is having approved money from other user', () => {
+        //login
+        PARAM_LOGIN("tester","tester");
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', 1);
     });
 });
