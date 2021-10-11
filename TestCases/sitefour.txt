@@ -39,7 +39,14 @@ TC001 - Navigate to My Account page and edit name, phone and email
 TC002 - Navigate to New transaction page, search 5 users and request for money
 TC003 - Navigate to New transaction page, search 5 users and pay money
 
+
 Scenario 6 - Create a new user, logout, login with old user and Make a new transaction (Request money) from Home page. Login as new user and accept request from old user in Personal page. Check the balance of the new and old user, should be updated.Verify notification is updated.
+
+TC001 - Login with a new user and then logout
+TC002 - Login with another user and make a transaction with new user
+TC003 - Accept the request from the old user
+TC004 - Verify the old user account is having approved money from other user
+
 
 Scenario 7 - Create a new user, logout, login with old user and Make a new transaction (Pay money) from Home page with a newly created user. Login as new user and then check the balance of the new and old user, should be updated. Verify notification is updated.
 
