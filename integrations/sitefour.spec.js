@@ -659,6 +659,9 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
     it('TC004 - Verify the old user account is having approved money from other user', () => {
         //login
         PARAM_LOGIN("tester","tester");
+        //verify balance to be greater than 1
         cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', 1);
+        //logout
+        LOGOUT();
     });
 });
