@@ -628,7 +628,7 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
     it('TC002 - Login with another user and make a transaction with new user', () => {
         //login
         PARAM_LOGIN("tester","tester");
-        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.lessThan', 1);
+        //cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.lessThan', 1);
         cy.get('[data-test=nav-top-new-transaction]').click({force:true});
         cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('tester1');
         cy.wait(3000);
@@ -640,7 +640,7 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         LOGOUT();
     });
 
-   it('TC003 - Accept the request from the old user', () => {
+    it('TC003 - Accept the request from the old user', () => {
         //login
         PARAM_LOGIN("tester1","tester1");
         cy.get('[data-test=nav-personal-tab]').click({force:true});
@@ -661,6 +661,83 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         PARAM_LOGIN("tester","tester");
         //verify balance to be greater than 1
         cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', 1);
+        //logout
+        LOGOUT();
+    });
+
+    it('TC005 - Verify both user accounts have active notifications that comes after a transaction is approved or declined', () => {
+        //login user1
+        PARAM_LOGIN("tester","tester");
+        cy.wait(2000);
+        //verify balance to be greater than 1
+        cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
+        //logout
+        LOGOUT();
+
+        //login user2
+        PARAM_LOGIN("tester1","tester1");
+        cy.wait(2000);
+        //verify balance to be greater than 1
+        cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
+        //logout
+        LOGOUT();
+    });
+
+
+    it('TC006 - Login with another user and make a transaction with new user', () => {
+        //login
+        PARAM_LOGIN("tester","tester");
+        //cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.lessThan', 1);
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('tester1');
+        cy.wait(3000);
+        cy.contains('tester1').first().click({force:true});
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('Request 50 dollar');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        //logout
+        LOGOUT();
+    });
+
+    it('TC007 - Decline the request from the old user', () => {
+        //login
+        PARAM_LOGIN("tester1","tester1");
+        cy.get('[data-test=nav-personal-tab]').click({force:true});
+        cy.contains('tester tester').first().click({force:true});
+        cy.wait(2000);
+        cy.get('.MuiButton-label').eq(2).click({force:true});
+        cy.wait(2000);
+        //cy.contains('charged').should('be.visible');
+        //verify notifications
+        cy.get('[data-test=nav-top-notifications-link]').click({force:true});
+        cy.get('[data-test=notifications-list]').should('be.visible');
+        //logout
+        LOGOUT();
+    });
+
+    it('TC008 - Verify the old user account is having approved money from other user', () => {
+        //login
+        PARAM_LOGIN("tester","tester");
+        //verify balance to be greater than 1
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', 1);
+        //logout
+        LOGOUT();
+    });
+
+    it('TC009 - Verify both user accounts have active notifications that comes after a transaction is approved or declined', () => {
+        //login user1
+        PARAM_LOGIN("tester","tester");
+        cy.wait(2000);
+        //verify balance to be greater than 1
+        cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
+        //logout
+        LOGOUT();
+
+        //login user2
+        PARAM_LOGIN("tester1","tester1");
+        cy.wait(2000);
+        //verify balance to be greater than 1
+        cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
     });
