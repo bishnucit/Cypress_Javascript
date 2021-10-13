@@ -55,6 +55,13 @@ TC009 - Verify both user accounts have active notifications that comes after a t
 
 Scenario 7 - Create a new user, logout, login with old user and Make a new transaction (Pay money) from Home page with a newly created user. Login as new user and then check the balance of the new and old user, should be updated. Verify notification is updated.
 
+TC001 - Login with a new user and then logout
+TC002 - Login with another user and make a transaction with new user
+TC003 - Accept the request from the old user
+TC004 - Verify the old user account is having less money from other before
+TC005 - Verify both user accounts have active notifications that comes after a transaction is approved or declined
+
+
 Scenario 8 - Make 2 transactions with any user and then verify the transaction from personal page.
 
 Scenario 9 - Like and comment on personal transactions and verify received notification on notification symbol and notification page. Dismiss the notification.
