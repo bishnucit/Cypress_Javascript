@@ -673,7 +673,6 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
-
         //login user2
         PARAM_LOGIN("tester1","tester1");
         cy.wait(2000);
@@ -732,7 +731,6 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
-
         //login user2
         PARAM_LOGIN("tester1","tester1");
         cy.wait(2000);
