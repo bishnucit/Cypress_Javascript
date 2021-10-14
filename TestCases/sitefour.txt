@@ -3,8 +3,7 @@ Download the app from https://github.com/cypress-io/cypress-realworld-app
 SUT - http://localhost:3000
 
 Scenario 1 - Verify all elements exists on the application
-
-TC001 - Sign in page (/signin) - Verify all elements of sign in page.
+TC001 - Sign in page (/signin) - Verify all elements of sign in page
 TC002 - Sign up page (/signup)- Verify all elements of sign up page
 TC003 - Home page - Verify all elements of home page
 TC004 - Contacts page (/contacts) - Verify all elements of contacts page
@@ -16,32 +15,27 @@ TC009 - Bank Accounts page (/bankaccounts) - Verify all elements of Bank account
 
 
 Scenario 2 - View first two transactions on Home page and comment and like on the transaction (comment nice if +transaction else comment sad)
-
 TC001 - Verify two comments are existing
 TC002 - Comment and like first comment
 TC003 - Comment and like second comment
 
 
 Scenario 3 - View transaction from $200 t0 $1000 range on Home page 
-
 TC001 - Select $0 to $500 transaction in slider
 TC002 - Select transactions for the month of september in date picker
 
 
 Scenario 4 - Create a new bank account after login and delete the account
-
 TC001 - Create a new bank account after login and delete after creating immediately
 
 
 Scenario 5 - Edit name, phone number, email in user settings and make 5 transactions(request, pay) with 5 friends.
-
 TC001 - Navigate to My Account page and edit name, phone and email
 TC002 - Navigate to New transaction page, search 5 users and request for money
 TC003 - Navigate to New transaction page, search 5 users and pay money
 
 
 Scenario 6 - Create a new user, logout, login with old user and Make a new transaction (Request money) from Home page. Login as new user and accept request from old user in Personal page. Check the balance of the new and old user, should be updated.Verify notification is updated.
-
 TC001 - Login with a new user and then logout
 TC002 - Login with another user and make a transaction with new user
 TC003 - Accept the request from the old user
@@ -54,7 +48,6 @@ TC009 - Verify both user accounts have active notifications that comes after a t
 
 
 Scenario 7 - Create a new user, logout, login with old user and Make a new transaction (Pay money) from Home page with a newly created user. Login as new user and then check the balance of the new and old user, should be updated. Verify notification is updated.
-
 TC001 - Login with a new user and then logout
 TC002 - Login with another user and make a transaction with new user
 TC003 - Accept the request from the old user
