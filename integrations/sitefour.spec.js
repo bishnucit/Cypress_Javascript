@@ -673,6 +673,7 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
+
         //login user2
         PARAM_LOGIN("tester1","tester1");
         cy.wait(2000);
@@ -731,6 +732,7 @@ describe('Scenario 6 - Create a new user, logout, login with old user and Make a
         cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
+
         //login user2
         PARAM_LOGIN("tester1","tester1");
         cy.wait(2000);
@@ -806,5 +808,41 @@ describe('Scenario 7 - Create a new user, logout, login with old user and Make a
         cy.get('[data-test=nav-top-notifications-link]').invoke('text').then(text => +text).should('be.greaterThan', 0);
         //logout
         LOGOUT();
+    });
+});
+
+
+describe('Scenario 8 - Make 2 transactions with any user and then verify the transaction from personal page.', () => {
+    beforeEach(() => {
+        cy.visit(testURL,{failOnStatusCode: false});
+    });
+
+    it('TC001 - Login with a new user and then logout', () => {
+        //login
+        PARAM_LOGIN("tester1","tester1");
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', -1);
+        //make transactions
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('tester tester');
+        cy.wait(3000);
+        cy.contains('tester tester').first().click({force:true});
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('Request 50 dollar');
+        cy.get('[data-test=transaction-create-submit-request]').should('be.enabled').click({force:true});
+        cy.wait(2000);
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        cy.get('[data-test=nav-top-new-transaction]').click({force:true});
+        cy.get('[data-test=user-list-search-input]').click({force:true}).clear().type('tester tester');
+        cy.wait(3000);
+        cy.contains('tester tester').first().click({force:true});
+        cy.get('#amount').click({force:true}).clear().type('50');
+        cy.get('#transaction-create-description-input').click({force:true}).clear().type('Request 50 dollar');
+        cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled').click({force:true});
+        //logout
+        LOGOUT();
+    });
+
+    it('TC002 - Login with another user and approve the transaction', () => {
+        //coming soon
     });
 });
