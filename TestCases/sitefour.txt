@@ -56,6 +56,8 @@ TC005 - Verify both user accounts have active notifications that comes after a t
 
 
 Scenario 8 - Make 2 transactions with any user and then verify the transaction from personal page.
+TC001 - Login with a new user and then logout
+TC002 - Login with another user and approve the transaction
 
 Scenario 9 - Like and comment on personal transactions and verify received notification on notification symbol and notification page. Dismiss the notification.
 
