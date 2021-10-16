@@ -843,6 +843,48 @@ describe('Scenario 8 - Make 2 transactions with any user and then verify the tra
     });
 
     it('TC002 - Login with another user and approve the transaction', () => {
-        //coming soon
+        //login
+        PARAM_LOGIN("tester","tester");
+        cy.wait(1000);
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan', -1);
+        //verify both requested and paid transactions and then accept the requested transaction
+        cy.get('[data-test=nav-personal-tab]').click({force: true});
+        cy.contains('paid').should('be.visible');
+        cy.contains('requested').should('be.visible');
+        cy.contains('requested').first().click({force:true});
+        cy.wait(2000);
+        cy.get('.MuiButton-label').eq(1).click({force:true});
+        cy.get('[data-test=sidenav-home]').click({force:true});
+        //logout
+        LOGOUT();
+    });
+
+    it('TC003 - Verify both users have transactions on their home tab and have active notifications', () => {
+        //login first user
+        PARAM_LOGIN("tester1","tester1");
+        cy.wait(1000);
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan',1);
+        //verify both charged and paid transactions
+        cy.get('[data-test=nav-personal-tab]').click({force: true});
+        cy.contains('paid').should('be.visible');
+        cy.contains('charged').should('be.visible');
+        cy.get('[data-test=nav-top-notifications-link]').click({force:true});
+        cy.wait(1000);
+        cy.contains('Dismiss').should('be.visible');
+        //logout
+        LOGOUT();
+        //login second user
+        PARAM_LOGIN("tester","tester");
+        cy.wait(1000);
+        cy.get('[data-test=sidenav-user-balance]').invoke('text').then(text => +text.replace('$','').replace('.','')).should('be.greaterThan',1);
+        //verify both requested and paid transactions
+        cy.get('[data-test=nav-personal-tab]').click({force: true});
+        cy.contains('paid').should('be.visible');
+        cy.contains('requested').should('be.visible');
+        cy.get('[data-test=nav-top-notifications-link]').click({force:true});
+        cy.wait(1000);
+        cy.contains('Dismiss').should('be.visible');
+        //logout
+        LOGOUT();
     });
 });
