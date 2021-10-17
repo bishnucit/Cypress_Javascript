@@ -1,0 +1,33 @@
+Below are the testcases to Automate End to End testing (e2e) of a full stack express/react application.
+
+SUT - https://restful-booker.herokuapp.com/apidoc/index.html#api-Auth-CreateToken
+
+Scenario 1 - Verify all endpoints 
+TC001 - Verify all valid endpoints are giving a 200 response
+TC002 - Verify all endpoints with a error input is giving error response
+
+
+Scenario 2 - Health check, create token and CREATE, GET the new booking
+TC001 - Health check the URL under test
+TC002 - Create a token for POST/DELETE booking
+TC003 - Create a new booking
+TC004 - Get the created booking
+
+
+Scenario 3 - Create a token, get an existing booking and partial update booking
+TCOO1 - Create a token for POST/DELETE booking
+TC002 - Get the existing booking
+TC003 - Partially update the existing booking
+
+
+Scenario 4 - Create a token, get an existing booking and delete booking
+TCOO1 - Create a token for POST/DELETE booking
+TC002 - Get the existing booking
+TC003 - Delete the existing booking
+
+
+Scenario 5 - Create a token, Make a new booking, Update the booking and get by the booking by ID
+TC001 - Create a token for POST/DELETE booking
+TC002 - Create a new booking
+TC003 - Update that booking
+TC004 - Get the created booking by id
