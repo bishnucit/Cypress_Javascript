@@ -27,11 +27,11 @@ npx cypress run  --record --spec "location_to_spec" (runs a single spec file and
 
 Description of Website Under Tests:
 --------------------------------------------------------------------------------------------------------------
-welcome.spec.js -  https://example.cypress.io/todo - Todo app
+welcome.spec.js -  https://example.cypress.io/todo - Script to test a simple Todo app
 --------------------------------------------------------------------------------------------------------------
-sitetwo.spec.js - http://the-internet.herokuapp.com/ - Automation Practice Website
+sitetwo.spec.js - http://the-internet.herokuapp.com/ - Script for testing Automation Practice Website
 --------------------------------------------------------------------------------------------------------------
-sitethree.spec.js - http://automationpractice.com/ - Wordpress sample store for automation
+sitethree.spec.js - http://automationpractice.com/ - Script to test functionality of a Wordpress sample store
 --------------------------------------------------------------------------------------------------------------
-sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - Full stack Express/React app 
+sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - E2E script of testing Full stack Express/React app 
 --------------------------------------------------------------------------------------------------------------
