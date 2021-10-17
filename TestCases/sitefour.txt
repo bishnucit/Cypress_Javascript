@@ -1,3 +1,5 @@
+Below are the testcases to Automate End to End testing (e2e) of a react application.
+
 Download the app from https://github.com/cypress-io/cypress-realworld-app
 
 SUT - http://localhost:3000
