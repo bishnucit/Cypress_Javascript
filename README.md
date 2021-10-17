@@ -33,5 +33,5 @@ sitetwo.spec.js - http://the-internet.herokuapp.com/ - Automation Practice Websi
 --------------------------------------------------------------------------------------------------------------
 sitethree.spec.js - http://automationpractice.com/ - Wordpress sample store for automation
 --------------------------------------------------------------------------------------------------------------
-sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - React app 
+sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - Full stack Express/React app 
 --------------------------------------------------------------------------------------------------------------
