@@ -56,7 +56,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             expect('lastname').to.be.a('string');
         });
         cy.request({
-            method: 'GET',
+            method: 'POST',
             url: 'https://restful-booker.herokuapp.com/booking',
             body: {
                     "firstname" : "Jim",
@@ -77,6 +77,15 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             expect(response).to.have.property('headers');
             expect(response).to.have.property('duration');
             expect(response.body).to.not.be.null;
+            expect(response.body).have.property('booking');
+            expect(response.body.booking).have.property('firstname');
+            expect(response.body.booking).have.property('lastname');
+            expect(response.body.booking).have.property('totalprice');
+            expect(response.body.booking).have.property('depositpaid');
+            expect(response.body.booking).have.property('additionalneeds');
+            expect(response.body.booking.bookingdates).have.property('checkin');
+            expect(response.body.booking.bookingdates).have.property('checkout');
+
         });
     });
 });
