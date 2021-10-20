@@ -36,7 +36,7 @@ sitethree.spec.js - http://automationpractice.com/ - Script to test functionalit
 sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - E2E script of testing Full stack Express/React app 
 --------------------------------------------------------------------------------------------------------------
 
-API TESTING WITH CYPRESS -- Description of Website Under Tests:
+API TESTING WITH CYPRESS -- Description of API Endpoints Under Tests:
 --------------------------------------------------------------------------------------------------------------
 sitefive.spec.js - https://restful-booker.herokuapp.com/apidoc/index.html - Script to test API endpoints
 --------------------------------------------------------------------------------------------------------------
