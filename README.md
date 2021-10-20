@@ -25,7 +25,7 @@ npx cypress run --browser chrome (runs on a particular browser instead of defaul
 npx cypress run  --record --spec "location_to_spec" (runs a single spec file and records on dashboard)
 --------------------------------------------------------------------------------------------------------------
 
-Description of Website Under Tests:
+E2E TESTING WITH CYPRESS -- Description of Website Under Tests:
 --------------------------------------------------------------------------------------------------------------
 welcome.spec.js -  https://example.cypress.io/todo - Script to test a simple Todo app
 --------------------------------------------------------------------------------------------------------------
@@ -34,6 +34,9 @@ sitetwo.spec.js - http://the-internet.herokuapp.com/ - Script for testing Automa
 sitethree.spec.js - http://automationpractice.com/ - Script to test functionality of a Wordpress sample store
 --------------------------------------------------------------------------------------------------------------
 sitefour.spec.js - https://github.com/cypress-io/cypress-realworld-app - E2E script of testing Full stack Express/React app 
+--------------------------------------------------------------------------------------------------------------
+
+API TESTING WITH CYPRESS -- Description of Website Under Tests:
 --------------------------------------------------------------------------------------------------------------
 sitefive.spec.js - https://restful-booker.herokuapp.com/apidoc/index.html - Script to test API endpoints
 --------------------------------------------------------------------------------------------------------------
