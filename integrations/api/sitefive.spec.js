@@ -19,6 +19,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
 
     it('TC001 - Verify all valid endpoints are giving a 200 response', () => {
 
+        var current_token;
         //create token
         cy.request({
             method: 'POST',
@@ -36,6 +37,8 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             expect(response).to.have.property('duration');
             expect(response.body).to.not.be.null;
             expect(response.body).have.property('token');
+            current_token = response.body.token;
+            //console.log(current_token);
             expect('token').to.be.a('string');
         });
 
@@ -54,7 +57,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
         //get booking
         cy.request({
             method: 'GET',
-            url: 'https://restful-booker.herokuapp.com/booking/1',
+            url: 'https://restful-booker.herokuapp.com/booking/3',
             }).then(function(response){
             expect(response.status).to.eq(200);
             expect(response).to.have.property('headers');
@@ -118,7 +121,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
         //update booking
         cy.request({
             method: 'PUT',
-            url: 'https://restful-booker.herokuapp.com/booking/1',
+            url: 'https://restful-booker.herokuapp.com/booking/64',
             body: {
                     "firstname" : "James",
                     "lastname" : "Brown",
@@ -131,11 +134,12 @@ describe('Scenario 1 - Verify all endpoints ', () => {
                     "additionalneeds" : "Breakfast"
                   },
             headers: {
-                    'content-type': 'application/JSON',
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Authorisation': 'YWRtaW46cGFzc3dvcmQxMjM=]'
                     }
             }).then(function(response){
+            console.log(current_token)
             expect(response.status).to.eq(200);
             expect(response).to.have.property('headers');
             expect(response).to.have.property('duration');
@@ -154,7 +158,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             headers: {
                     'content-type': 'application/json',
                     'Accept': 'application/json',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Cookie': 'token=aad354e9dffe538'
                     }
             }).then(function(response){
             expect(response.status).to.eq(200);
@@ -169,7 +173,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             url: 'https://restful-booker.herokuapp.com/booking/2',
             headers: {
                     'content-type': 'application/JSON',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Cookie': 'token=aad354e9dffe538'
                     }
             }).then(function(response){
             expect(response.status).to.eq(201);
@@ -193,6 +197,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
                     'content-type': 'application/JSON'
                     }
         }).then(function(response){
+            var current_token = response.body.token;
             expect(response.status).to.eq(200);
             expect(response).to.have.property('headers');
             expect(response).to.have.property('duration');
@@ -275,7 +280,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             headers: {
                     'content-type': 'application/JSON',
                     'Accept': 'application/json',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Cookie': 'token=fake_token'
                     }
             }).then(function(response){
             expect(response.status).to.eq(403);
@@ -293,7 +298,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             headers: {
                     'content-type': 'application/json',
                     'Accept': 'application/json',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Cookie': 'token=aad354e9dffe538'
                     }
             }).then(function(response){
             expect(response.status).to.eq(403);
@@ -306,7 +311,7 @@ describe('Scenario 1 - Verify all endpoints ', () => {
             url: 'https://restful-booker.herokuapp.com/booking/abcd',
             headers: {
                     'content-type': 'application/JSON',
-                    'Cookie': 'token=5a3434c8d594993'
+                    'Cookie': 'token=aad354e9dffe538'
                     }
             }).then(function(response){
             expect(response.status).to.eq(403);
@@ -320,7 +325,7 @@ describe('Scenario 2 - Health check, create token and CREATE, GET the new bookin
 
     it('TC001 - Health check the URL under test', () => {
 
-        //create token
+        //Health check
         cy.request({
             method: 'GET',
             url: 'https://restful-booker.herokuapp.com/ping',
@@ -425,6 +430,83 @@ describe('Scenario 2 - Health check, create token and CREATE, GET the new bookin
             expect(response.body.depositpaid).to.be.a('boolean');
             expect(response.body.bookingdates).to.be.a('object');
             //expect(response.body.additionalneeds).to.be.a('string');
+        });
+    });
+});
+
+describe('Scenario 3 - Create a token, get an existing booking and partial update booking', () => {
+
+    var current_token;
+
+    it('TCOO1 - Create a token for POST/DELETE booking', () => {
+
+        //create token
+        cy.request({
+            method: 'POST',
+            url: 'https://restful-booker.herokuapp.com/auth',
+            body: {
+                    'username':'admin',
+                    'password':'password123'
+                  },
+            headers: {
+                    'content-type': 'application/JSON'
+                    }
+        }).then(function(response){
+            current_token = response.body.token;
+            //cy.log(response);
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+            expect(response.body).have.property('token');
+            expect('token').to.be.a('string');
+        });
+    });
+
+    it('TC002 - Get the created booking', () => {
+    //get booking
+        cy.request({
+            method: 'GET',
+            url: 'https://restful-booker.herokuapp.com/booking/6',
+            }).then(function(response){
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+            expect(response.body).have.property('bookingdates');
+            expect(response.body).have.property('depositpaid');
+            expect(response.body).have.property('firstname');
+            expect(response.body).have.property('lastname');
+            expect(response.body).have.property('totalprice');
+            expect('firstname').to.be.a('string');
+            expect('lastname').to.be.a('string');
+            expect(response.body.totalprice).to.be.a('number');
+            expect(response.body.depositpaid).to.be.a('boolean');
+            expect(response.body.bookingdates).to.be.a('object');
+            //expect(response.body.additionalneeds).to.be.a('string');
+        });
+    });
+
+    it('TC003 - Partially update the existing booking', () => {
+
+        //partial update booking
+        cy.request({
+            method: 'PATCH',
+            url: 'https://restful-booker.herokuapp.com/booking/6',
+            body: {
+                    "firstname" : "James1",
+                    "lastname" : "Brown",
+                  },
+            headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Cookie': 'token='+current_token
+                    }
+            }).then(function(response){
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
         });
     });
 });
