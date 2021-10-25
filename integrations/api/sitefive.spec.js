@@ -610,3 +610,136 @@ describe('Scenario 4 - Create a token, get an existing booking and delete bookin
         });
     });
 });
+
+describe('Scenario 4 - Health check, create token and CREATE, GET the new booking ', () => {
+
+    var current_token;
+    var current_bookingid;
+
+    it('TC001 - Create a token for POST/DELETE booking', () => {
+
+        //create token
+        cy.request({
+            method: 'POST',
+            url: 'https://restful-booker.herokuapp.com/auth',
+            body: {
+                    'username':'admin',
+                    'password':'password123'
+                  },
+            headers: {
+                    'content-type': 'application/JSON'
+                    }
+        }).then(function(response){
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+            expect(response.body).have.property('token');
+            current_token = response.body.token;
+            expect('token').to.be.a('string');
+        });
+    });
+
+    it('TC002 - Create a new booking', () => {
+
+        //create booking
+        cy.request({
+            method: 'POST',
+            url: 'https://restful-booker.herokuapp.com/booking',
+            body: {
+                    "firstname" : "Nash",
+                    "lastname" : "Downing",
+                    "totalprice" : 899,
+                    "depositpaid" : true,
+                    "bookingdates" : {
+                        "checkin" : "2021-10-01",
+                        "checkout" : "2021-11-01"
+                    },
+                    "additionalneeds" : "Dinner"
+                  },
+            headers: {
+                    'content-type': 'application/JSON'
+                    }
+            }).then(function(response){
+            current_bookingid = response.body.bookingid;
+            cy.wrap(current_bookingid).as('current_bookingid');
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+            expect(response.body).have.property('booking');
+            expect(response.body.bookingid).to.be.a('number');
+            expect(response.body.booking).have.property('firstname');
+            expect(response.body.booking.firstname).to.be.a('string');
+            expect(response.body.booking).have.property('lastname');
+            expect(response.body.booking.lastname).to.be.a('string');
+            expect(response.body.booking).have.property('totalprice');
+            expect(response.body.booking.totalprice).to.be.a('number');
+            expect(response.body.booking).have.property('depositpaid');
+            expect(response.body.booking.depositpaid).to.be.a('boolean');
+            expect(response.body.booking).have.property('additionalneeds');
+            expect(response.body.booking.additionalneeds).to.be.a('string');
+            expect(response.body.booking.bookingdates).have.property('checkin');
+            expect(response.body.booking.bookingdates.checkin).to.be.a('string');
+            expect(response.body.booking.bookingdates).have.property('checkout');
+            expect(response.body.booking.bookingdates.checkout).to.be.a('string');
+
+        });
+    });
+
+    it('TC003 - Update that booking', () => {
+
+        //update booking
+        cy.request({
+            method: 'PUT',
+            url: `https://restful-booker.herokuapp.com/booking/`+current_bookingid,
+            body: {
+                    "firstname" : "James",
+                    "lastname" : "Brown",
+                    "totalprice" : 111,
+                    "depositpaid" : true,
+                    "bookingdates" : {
+                        "checkin" : "2018-01-01",
+                        "checkout" : "2019-01-01"
+                    },
+                    "additionalneeds" : "Breakfast"
+                },
+            headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Cookie': 'token=' + current_token
+                    }
+            }).then(function(response){
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+        });
+    });
+
+
+    it('TC004 - Get the created booking', () => {
+
+        //get booking
+        cy.request({
+            method: 'GET',
+            url: 'https://restful-booker.herokuapp.com/booking/'+ current_bookingid,
+            }).then(function(response){
+            expect(response.status).to.eq(200);
+            expect(response).to.have.property('headers');
+            expect(response).to.have.property('duration');
+            expect(response.body).to.not.be.null;
+            expect(response.body).have.property('bookingdates');
+            expect(response.body).have.property('depositpaid');
+            expect(response.body).have.property('firstname');
+            expect(response.body).have.property('lastname');
+            expect(response.body).have.property('totalprice');
+            expect('firstname').to.be.a('string');
+            expect('lastname').to.be.a('string');
+            expect(response.body.totalprice).to.be.a('number');
+            expect(response.body.depositpaid).to.be.a('boolean');
+            expect(response.body.bookingdates).to.be.a('object');
+            expect(response.body.additionalneeds).to.be.a('string');
+        });
+    });
+});
