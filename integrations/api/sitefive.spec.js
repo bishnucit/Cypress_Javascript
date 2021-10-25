@@ -10,7 +10,7 @@
 //reference for assertions
 //https://docs.cypress.io/guides/references/assertions#TDD-Assertions
 
-//All Pass - https://prnt.sc/1x5mbtj
+//All Pass - https://prnt.sc/1xadvm5
 
 describe('Scenario 1 - Verify all endpoints ', () => {
 
