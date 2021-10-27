@@ -431,7 +431,6 @@ describe('Scenario 2 - Health check, create token and CREATE, GET the new bookin
             expect(response.body.totalprice).to.be.a('number');
             expect(response.body.depositpaid).to.be.a('boolean');
             expect(response.body.bookingdates).to.be.a('object');
-            //expect(response.body.additionalneeds).to.be.a('string');
         });
     });
 });
@@ -455,7 +454,6 @@ describe('Scenario 3 - Create a token, get an existing booking and partial updat
                     }
         }).then(function(response){
             current_token = response.body.token;
-            //cy.log(response);
             expect(response.status).to.eq(200);
             expect(response).to.have.property('headers');
             expect(response).to.have.property('duration');
@@ -485,7 +483,6 @@ describe('Scenario 3 - Create a token, get an existing booking and partial updat
             expect(response.body.totalprice).to.be.a('number');
             expect(response.body.depositpaid).to.be.a('boolean');
             expect(response.body.bookingdates).to.be.a('object');
-            //expect(response.body.additionalneeds).to.be.a('string');
         });
     });
 
@@ -515,10 +512,6 @@ describe('Scenario 3 - Create a token, get an existing booking and partial updat
 
 describe('Scenario 4 - Create a token, get an existing booking and delete booking', () => {
 
-    //to run below api test cases follow the below steps-
-    //1. get token by running the create token endpoint (do this separately or by commenting other tests)
-    //2. replace the returned token from auth endpoint in update/delete test cases where token=somevalue
-    //3. then run all test cases it would run fine.
     var current_token;
     var current_bookingid;
 
